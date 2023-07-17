@@ -8,37 +8,6 @@ importers:
 
   .: {}
 
-  examples/floor-is-lava:
-    dependencies:
-      '@taoro/component':
-        specifier: workspace:^
-        version: link:../../packages/component
-      '@taoro/component-transform-2d':
-        specifier: workspace:^
-        version: link:../../packages/component-transform-2d
-      '@taoro/game':
-        specifier: workspace:^
-        version: link:../../packages/game
-      '@taoro/input':
-        specifier: workspace:^
-        version: link:../../packages/input
-      '@taoro/math-point':
-        specifier: workspace:^
-        version: link:../../packages/math-point
-      '@taoro/math-rect':
-        specifier: workspace:^
-        version: link:../../packages/math-rect
-      '@taoro/recorder':
-        specifier: workspace:^
-        version: link:../../packages/recorder
-      '@taoro/renderer-2d':
-        specifier: workspace:^
-        version: link:../../packages/renderer-2d
-    devDependencies:
-      vite:
-        specifier: ^4.4.0
-        version: 4.4.0
-
   examples/pong:
     dependencies:
       '@taoro/audio':

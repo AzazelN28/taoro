@@ -1,7 +1,7 @@
 {
   "name": "@taoro/input-mouse",
-  "version": "1.0.0",
-  "description": "",
+  "version": "1.0.4",
+  "description": "Input Mouse Subsystem for Taoro",
   "main": "index.js",
   "type": "module",
   "scripts": {

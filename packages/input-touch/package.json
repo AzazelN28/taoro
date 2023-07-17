@@ -1,7 +1,7 @@
 {
   "name": "@taoro/input-touch",
-  "version": "1.0.0",
-  "description": "",
+  "version": "1.0.4",
+  "description": "Input Touch Subsystem for Taoro",
   "main": "index.js",
   "type": "module",
   "scripts": {

@@ -1,6 +1,6 @@
 /**
- * 
- * 
+ *
+ *
  */
 export class MusicSource {
   #audioContext = null
@@ -9,7 +9,7 @@ export class MusicSource {
   #gainNode = null
 
   /**
-   * Creates a new MusicSource 
+   * Creates a new MusicSource
    *
    * @param {AudioContext} audioContext
    * @param {AudioBuffer} [buffer=null]
@@ -67,7 +67,7 @@ export class MusicSource {
   }
 
   start() {
-    this.#bufferSourceNode = audioContext.createBufferSource()
+    this.#bufferSourceNode = this.#audioContext.createBufferSource()
     this.#bufferSourceNode.buffer = this.#buffer
     this.#bufferSourceNode.loop = true
     this.#bufferSourceNode.connect(this.#gainNode)

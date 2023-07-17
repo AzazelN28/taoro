@@ -1,7 +1,7 @@
 {
   "name": "@taoro/input-pointer",
-  "version": "1.0.0",
-  "description": "",
+  "version": "1.0.4",
+  "description": "Input Pointer Subsystem for Taoro",
   "main": "index.js",
   "type": "module",
   "scripts": {
