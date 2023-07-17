@@ -1,0 +1,33 @@
+{
+  "name": "test",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "devDependencies": {
+    "vite": "^4.4.0"
+  },
+  "dependencies": {
+    "@taoro/audio": "workspace:^",
+    "@taoro/audio-music": "workspace:^",
+    "@taoro/audio-sound": "workspace:^",
+    "@taoro/canvas": "workspace:^",
+    "@taoro/collider-nano-2d": "workspace:^",
+    "@taoro/component": "workspace:^",
+    "@taoro/component-transform-2d": "workspace:^",
+    "@taoro/core": "workspace:^",
+    "@taoro/frame-counter": "workspace:^",
+    "@taoro/game": "workspace:^",
+    "@taoro/input": "workspace:^",
+    "@taoro/math-point": "workspace:^",
+    "@taoro/math-rect": "workspace:^",
+    "@taoro/renderer-2d": "workspace:^",
+    "@taoro/resources": "workspace:^",
+    "@taoro/scheduler": "workspace:^",
+    "@taoro/viewport": "workspace:^"
+  }
+}

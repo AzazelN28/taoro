@@ -1,0 +1,26 @@
+{
+  "name": "@taoro/math-rect",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "taoro"
+  ],
+  "author": "AzazelN28 <asakon28@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "@taoro/math-point": "workspace:^"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/anaga/taoro.git",
+    "directory": "packages/math-rect"
+  },
+  "files": [
+    "index.js"
+  ]
+}

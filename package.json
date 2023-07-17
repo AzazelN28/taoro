@@ -1,0 +1,21 @@
+{
+  "name": "taoro",
+  "version": "1.0.0",
+  "packageManager": "pnpm@8.6.7",
+  "description": "",
+  "type": "module",
+  "files": [
+    "LICENSE",
+    "README.md"
+  ],
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "fix": "node scripts/fixAll.js",
+    "verify": "node scripts/verifyAll.js"
+  },
+  "keywords": [
+    "taoro"
+  ],
+  "author": "AzazelN28 <asakon28@gmail.com>",
+  "license": "MIT"
+}

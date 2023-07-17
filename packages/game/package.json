@@ -1,0 +1,36 @@
+{
+  "name": "@taoro/game",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "taoro"
+  ],
+  "author": "AzazelN28 <asakon28@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "@taoro/audio": "workspace:^",
+    "@taoro/audio-music": "workspace:^",
+    "@taoro/audio-sound": "workspace:^",
+    "@taoro/core": "workspace:^",
+    "@taoro/frame-counter": "workspace:^",
+    "@taoro/input": "workspace:^",
+    "@taoro/loop": "workspace:^",
+    "@taoro/resources": "workspace:^",
+    "@taoro/runnable": "workspace:^",
+    "@taoro/scheduler": "workspace:^",
+    "@taoro/viewport": "workspace:^"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/anaga/taoro.git",
+    "directory": "packages/game"
+  },
+  "files": [
+    "index.js"
+  ]
+}

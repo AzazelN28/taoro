@@ -1,0 +1,28 @@
+{
+  "name": "@taoro/image-sheet",
+  "version": "1.0.2",
+  "description": "",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "taoro"
+  ],
+  "author": "AzazelN28 <asakon28@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "@taoro/canvas": "workspace:^",
+    "@taoro/math-point": "workspace:^",
+    "@taoro/math-rect": "workspace:^"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/anaga/taoro.git",
+    "directory": "packages/image-sheet"
+  },
+  "files": [
+    "index.js"
+  ]
+}
