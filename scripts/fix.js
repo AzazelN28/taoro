@@ -28,8 +28,12 @@ export async function fixPackageJSON(fileName, { dryRun = true } = {}) {
     if (!packageContent?.repository) {
       packageContent.repository = {
         type: 'git',
-        url: 'https://github.com/anaga/taoro.git',
+        url: 'https://github.com/AzazelN28/taoro.git',
         directory: `packages/${packageContent.name.slice(packageContent.name.indexOf('/') + 1)}`,
+      }
+    } else {
+      if (packageContent.repository.url === 'https://github.com/anaga/taoro.git') {
+        packageContent.repository.url = 'https://github.com/AzazelN28/taoro.git'
       }
     }
     if (!packageContent?.files) {

@@ -1,7 +1,7 @@
 {
   "name": "@taoro/image-sheet",
-  "version": "1.0.2",
-  "description": "",
+  "version": "1.0.4",
+  "description": "Image Sheet",
   "main": "index.js",
   "type": "module",
   "scripts": {
@@ -19,7 +19,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/anaga/taoro.git",
+    "url": "https://github.com/AzazelN28/taoro.git",
     "directory": "packages/image-sheet"
   },
   "files": [

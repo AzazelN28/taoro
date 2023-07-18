@@ -1,7 +1,7 @@
 {
   "name": "@taoro/fsm",
-  "version": "1.0.0",
-  "description": "",
+  "version": "1.0.2",
+  "description": "Finite State Machine",
   "main": "index.js",
   "type": "module",
   "scripts": {
@@ -14,7 +14,7 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/anaga/taoro.git",
+    "url": "https://github.com/AzazelN28/taoro.git",
     "directory": "packages/fsm"
   },
   "files": [

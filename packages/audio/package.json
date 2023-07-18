@@ -1,7 +1,7 @@
 {
   "name": "@taoro/audio",
-  "version": "1.0.0",
-  "description": "Audio System for taoro",
+  "version": "1.0.2",
+  "description": "Audio System",
   "main": "index.js",
   "type": "module",
   "scripts": {
@@ -18,7 +18,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/anaga/taoro.git",
+    "url": "https://github.com/AzazelN28/taoro.git",
     "directory": "packages/audio"
   },
   "files": [

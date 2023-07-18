@@ -1,7 +1,7 @@
 {
   "name": "@taoro/collider-nano-2d",
-  "version": "1.0.1",
-  "description": "",
+  "version": "1.0.4",
+  "description": "Collider 2D (nano)",
   "main": "index.js",
   "type": "module",
   "scripts": {
@@ -20,7 +20,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/anaga/taoro.git",
+    "url": "https://github.com/AzazelN28/taoro.git",
     "directory": "packages/collider-nano-2d"
   },
   "files": [

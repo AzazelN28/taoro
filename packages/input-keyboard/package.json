@@ -1,7 +1,7 @@
 {
   "name": "@taoro/input-keyboard",
-  "version": "1.0.1",
-  "description": "Input Keyboard Subsystem for taoro",
+  "version": "1.0.3",
+  "description": "Input Keyboard Subsystem",
   "main": "index.js",
   "type": "module",
   "scripts": {
@@ -18,7 +18,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/anaga/taoro.git",
+    "url": "https://github.com/AzazelN28/taoro.git",
     "directory": "packages/input-keyboard"
   },
   "files": [

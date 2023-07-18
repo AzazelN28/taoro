@@ -1,7 +1,7 @@
 {
   "name": "@taoro/renderer-2d",
-  "version": "1.0.1",
-  "description": "",
+  "version": "1.0.3",
+  "description": "Renderer 2D using Canvas 2D API",
   "main": "index.js",
   "type": "module",
   "scripts": {
@@ -20,7 +20,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/anaga/taoro.git",
+    "url": "https://github.com/AzazelN28/taoro.git",
     "directory": "packages/renderer-2d"
   },
   "files": [

@@ -1,7 +1,7 @@
 {
   "name": "@taoro/audio-music-source",
-  "version": "1.0.1",
-  "description": "",
+  "version": "1.0.3",
+  "description": "Music Source",
   "main": "index.js",
   "type": "module",
   "scripts": {
@@ -14,7 +14,7 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/anaga/taoro.git",
+    "url": "https://github.com/AzazelN28/taoro.git",
     "directory": "packages/audio-music-source"
   },
   "files": [

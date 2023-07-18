@@ -1,7 +1,7 @@
 {
   "name": "@taoro/create-game",
-  "version": "1.0.0",
-  "description": "",
+  "version": "1.0.2",
+  "description": "Game template generator for Taoro",
   "main": "index.js",
   "type": "module",
   "bin": {
@@ -23,7 +23,7 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/anaga/taoro.git",
+    "url": "https://github.com/AzazelN28/taoro.git",
     "directory": "packages/create-game"
   }
 }

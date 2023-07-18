@@ -11,7 +11,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "fix": "node scripts/fixAll.js",
-    "verify": "node scripts/verifyAll.js"
+    "verify": "node scripts/verifyAll.js",
+    "bump": "node scripts/bumpAll.js"
   },
   "keywords": [
     "taoro"
