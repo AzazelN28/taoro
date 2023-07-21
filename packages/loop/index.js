@@ -13,7 +13,8 @@ import { Runnable } from '@taoro/runnable'
  */
 export class Loop {
   /**
-   * Validates if the given pipeline is valid.
+   * Validates if the given pipeline is valid. A valid pipeline
+   * is an array of functions.
    *
    * @param {*} pipeline
    * @returns {boolean}
@@ -50,12 +51,18 @@ export class Loop {
   #frameId = null
 
   /**
-   * On frame is called on each frame.
+   * Current time (provided by rAF).
    *
-   * @param {number} [time]
+   * @type {number}
    */
-  #onFrame = (time) => {
-    this.#pipeline.forEach((step) => step(time))
+  #currentTime = 0
+
+  /**
+   * On frame is called on each frame.
+   */
+  #onFrame = (currentTime) => {
+    this.#currentTime = currentTime ?? 0
+    this.#pipeline.forEach((step) => step(currentTime))
     this.#frameId = this.#requestAnimationFrame.call(null, this.#onFrame)
   }
 
@@ -105,6 +112,15 @@ export class Loop {
    */
   get isRunning() {
     return this.#runnable.isRunning
+  }
+
+  /**
+   * Current time (provided by rAF)
+   *
+   * @type {number}
+   */
+  get currentTime() {
+    return this.#currentTime
   }
 
   /**

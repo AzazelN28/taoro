@@ -1,8 +1,8 @@
 {
   "name": "taoro",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "packageManager": "pnpm@8.6.7",
-  "description": "",
+  "description": "Taoro",
   "type": "module",
   "files": [
     "LICENSE",

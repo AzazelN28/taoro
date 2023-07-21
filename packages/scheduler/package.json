@@ -1,6 +1,6 @@
 {
   "name": "@taoro/scheduler",
-  "version": "1.0.2",
+  "version": "1.0.4",
   "description": "Scheduler",
   "main": "index.js",
   "type": "module",

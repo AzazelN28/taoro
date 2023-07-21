@@ -1,6 +1,6 @@
 {
   "name": "@taoro/loop",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Loop",
   "main": "index.js",
   "type": "module",

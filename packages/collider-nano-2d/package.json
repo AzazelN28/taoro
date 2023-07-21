@@ -1,6 +1,6 @@
 {
   "name": "@taoro/collider-nano-2d",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "description": "Collider 2D (nano)",
   "main": "index.js",
   "type": "module",

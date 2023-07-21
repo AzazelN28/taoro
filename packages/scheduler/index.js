@@ -1,32 +1,74 @@
+/**
+ * Scheduler
+ */
 export class Scheduler {
-  #tasks = new Set()
+  #iterators = new Set()
 
+  /**
+   * Updates the scheduler by calling next() on each
+   * iterator (task). If a task is async (returns a
+   * promise) it will be added back to the list once
+   * the promise is resolved.
+   *
+   * @returns {Scheduler}
+   */
   update() {
-    for (const task of this.#tasks) {
-      const result = task.next()
-      if (result.done) {
-        this.#tasks.delete(task)
+    for (const iterator of this.#iterators) {
+      const result = iterator.next()
+      if (result instanceof Promise) {
+        this.#iterators.delete(iterator)
+        result.then(() => this.#iterators.add(iterator))
+      } else if (result.done) {
+        this.#iterators.delete(iterator)
       }
     }
+    return this
   }
 
+  /**
+   * Clears the scheduler.
+   *
+   * @returns {Scheduler}
+   */
   clear() {
-    this.#tasks.clear()
+    this.#iterators.clear()
+    return this
   }
 
-  has(task) {
-    return this.#tasks.has(task)
+  /**
+   * Returns true if the scheduler has the iterator (task)
+   *
+   * @param {*} iterator
+   * @returns {boolean}
+   */
+  has(iterator) {
+    return this.#iterators.has(iterator)
   }
 
-  add(task) {
-    if (!(Symbol.iterator in task)) {
+  /**
+   * Adds an iterator (task) to the scheduler
+   *
+   * @param {*} iterator
+   * @returns {Scheduler}
+   */
+  add(iterator) {
+    if (!(Symbol.iterator in iterator)
+     && !(Symbol.asyncIterator in iterator)) {
       throw new TypeError('Task is not iterable')
     }
-    this.#tasks.add(task)
+    this.#iterators.add(iterator)
+    return this
   }
 
-  delete(task) {
-    this.#tasks.delete(task)
+  /**
+   * Deletes an iterator (task) from the scheduler
+   *
+   * @param {*} iterator
+   * @returns {Scheduler}
+   */
+  delete(iterator) {
+    this.#iterators.delete(iterator)
+    return this
   }
 }
 

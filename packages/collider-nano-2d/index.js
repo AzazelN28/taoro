@@ -2,13 +2,58 @@ import { Rect } from '@taoro/math-rect'
 import { Component } from '@taoro/component'
 import { TransformComponent } from '@taoro/component-transform-2d'
 
+export class Collision {
+  #id = null
+  #target = null
+  #source = null
+  #targetRect = null
+  #sourceRect = null
+
+  /**
+   * Creates a new collision identifier.
+   *
+   * @param {*} id
+   * @param {ColliderComponent} target
+   * @param {ColliderComponent} source
+   * @param {Rect} targetRect
+   * @param {Rect} sourceRect
+   */
+  constructor(id, target, source, targetRect, sourceRect) {
+    this.#id = id
+    this.#target = target
+    this.#source = source
+    this.#targetRect = targetRect
+    this.#sourceRect = sourceRect
+  }
+
+  get id() {
+    return this.#id
+  }
+
+  get target() {
+    return this.#target
+  }
+
+  get source() {
+    return this.#source
+  }
+
+  get targetRect() {
+    return this.#targetRect
+  }
+
+  get sourceRect() {
+    return this.#sourceRect
+  }
+}
+
 export class ColliderComponent extends Component {
-  #rect = null
+  #rects = null
   #collisions = new Set()
 
-  constructor(id, { tag = 0, collidesWithTag = 0, rect = new Rect() } = {}) {
+  constructor(id, { tag = 0, collidesWithTag = 0, rects = [new Rect()] } = {}) {
     super(id)
-    this.#rect = rect ?? new Rect()
+    this.#rects = rects ?? [new Rect()]
     this.tag = tag ?? 0
     this.collidesWithTag = collidesWithTag ?? 0
   }
@@ -17,8 +62,8 @@ export class ColliderComponent extends Component {
     return this.#collisions
   }
 
-  get rect() {
-    return this.#rect
+  get rects() {
+    return this.#rects
   }
 
   get hasCollided() {
@@ -26,7 +71,12 @@ export class ColliderComponent extends Component {
   }
 
   collidesWith(id) {
-    return this.#collisions.has(id)
+    for (const collision of this.#collisions) {
+      if (collision.id === id) {
+        return true
+      }
+    }
+    return false
   }
 }
 
@@ -62,18 +112,22 @@ export class Collider {
           continue
         }
 
-        aRect
-          .copy(a.rect)
-          .translatePoint(aTransform.position)
+        for (const aCurrentRect of a.rects) {
+          aRect
+            .copy(aCurrentRect)
+            .translatePoint(aTransform.position)
 
-        const bTransform = Component.findByIdAndConstructor(b.id, TransformComponent)
-        bRect
-          .copy(b.rect)
-          .translatePoint(bTransform.position)
+          for (const bCurrentRect of b.rects) {
+            const bTransform = Component.findByIdAndConstructor(b.id, TransformComponent)
+            bRect
+              .copy(bCurrentRect)
+              .translatePoint(bTransform.position)
 
-        if (aRect.intersectsRect(bRect)) {
-          a.collisions.add(b.id)
-          b.collisions.add(a.id)
+            if (aRect.intersectsRect(bRect)) {
+              a.collisions.add(new Collision(b.id, b, a, bRect.clone(), aRect.clone()))
+              b.collisions.add(new Collision(a.id, a, b, aRect.clone(), bRect.clone()))
+            }
+          }
         }
       }
     }
