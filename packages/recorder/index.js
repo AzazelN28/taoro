@@ -26,6 +26,7 @@ function getFileExtension(mimeType) {
 /**
  * Options for the MediaRecorder.
  *
+ * @see https://developer.mozilla.org/en-US/docs/Web/API/MediaRecorder/MediaRecorder#Syntax
  * @typedef {Object} RecorderMediaRecorderOptions
  * @property {string} [mimeType=video/webm;codecs=vp9] A MIME type specifying the format for the resulting media
  * @property {number} [audioBitsPerSecond=128000] The number of bits per second of audio

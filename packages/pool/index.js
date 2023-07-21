@@ -117,10 +117,6 @@ export class Pool {
     }
   }
 
-  get index() {
-    return this.#index
-  }
-
   get size() {
     return this.#size
   }
@@ -133,13 +129,21 @@ export class Pool {
     return this.#count
   }
 
+  /**
+   * Returns the next index.
+   *
+   * @returns {number}
+   */
   #next() {
-    this.#index++
-    if (this.#index >= this.#size) {
-      this.#index = 0
-    }
+    this.#index = (this.#index + 1) % this.#size
+    return this.#index
   }
 
+  /**
+   * Allocates a new pooled object.
+   *
+   * @returns {*}
+   */
   allocate() {
     let start = this.#index
     do {
@@ -154,6 +158,12 @@ export class Pool {
     return null
   }
 
+  /**
+   * Deallocates a pooled object.
+   *
+   * @param {*} object
+   * @returns {boolean}
+   */
   deallocate(object) {
     const index = this.#indices.get(object)
     const ref = this.#refs[index]
@@ -164,6 +174,20 @@ export class Pool {
       return true
     }
     return false
+  }
+
+  /**
+   * Deallocates multiple objects.
+   *
+   * @param {*} objects
+   * @returns {boolean}
+   */
+  deallocateAll(objects) {
+    let deallocated = 0
+    for (const object of objects) {
+      deallocated &= this.deallocate(object)
+    }
+    return deallocated
   }
 }
 

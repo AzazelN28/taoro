@@ -1,6 +1,6 @@
 {
   "name": "@taoro/component-transform-2d",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Generic Transform 2D",
   "main": "index.js",
   "type": "module",

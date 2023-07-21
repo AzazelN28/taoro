@@ -41,10 +41,21 @@ class Subscriber {
 }
 
 export class PubSub {
-  #subscribers = [] 
+  #subscribers = []
 
   subscribe(callback, ...topics) {
-    this.#subscribers.push(new Subscriber(callback, topics))
+    const subscriber = new Subscriber(callback, topics)
+    this.#subscribers.push(subscriber)
+    return subscriber
+  }
+
+  unsubscribe(subscriber) {
+    const index = this.#subscribers.indexOf(subscriber)
+    if (index === -1) {
+      return false
+    }
+    this.#subscribers.splice(index, 1)
+    return true
   }
 
   publish(payload, ...topics) {
@@ -54,6 +65,7 @@ export class PubSub {
       }
       subscriber.notify(payload)
     }
+    return this
   }
 }
 

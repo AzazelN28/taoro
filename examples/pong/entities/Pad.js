@@ -2,6 +2,7 @@ import { Component } from '@taoro/component'
 import { TransformComponent } from '@taoro/component-transform-2d'
 import { RectComponent } from '@taoro/renderer-2d'
 import { ColliderComponent } from '@taoro/collider-nano-2d'
+import { Rect } from '@taoro/math-rect'
 import { Point } from '@taoro/math-point'
 
 export function* Pad(game, id, human = false) {
@@ -20,8 +21,11 @@ export function* Pad(game, id, human = false) {
     )
   }
 
-  const collider = new ColliderComponent(id, { tag: 0, collidesWithTag: 1 })
-  collider.rect.set(-12, -64, 24, 128)
+  const collider = new ColliderComponent(id, {
+    tag: 0,
+    target: 1,
+    rects: [rect.rect.clone()]
+  })
 
   const velocity = new Point(0, 0)
 

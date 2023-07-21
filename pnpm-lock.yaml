@@ -66,6 +66,67 @@ importers:
         specifier: ^4.4.0
         version: 4.4.0
 
+  examples/wolf3d:
+    dependencies:
+      '@taoro/audio':
+        specifier: workspace:^
+        version: link:../../packages/audio
+      '@taoro/audio-music':
+        specifier: workspace:^
+        version: link:../../packages/audio-music
+      '@taoro/audio-sound':
+        specifier: workspace:^
+        version: link:../../packages/audio-sound
+      '@taoro/canvas':
+        specifier: workspace:^
+        version: link:../../packages/canvas
+      '@taoro/collider-nano-2d':
+        specifier: workspace:^
+        version: link:../../packages/collider-nano-2d
+      '@taoro/component':
+        specifier: workspace:^
+        version: link:../../packages/component
+      '@taoro/component-transform-2d':
+        specifier: workspace:^
+        version: link:../../packages/component-transform-2d
+      '@taoro/core':
+        specifier: workspace:^
+        version: link:../../packages/core
+      '@taoro/frame-counter':
+        specifier: workspace:^
+        version: link:../../packages/frame-counter
+      '@taoro/game':
+        specifier: workspace:^
+        version: link:../../packages/game
+      '@taoro/input':
+        specifier: workspace:^
+        version: link:../../packages/input
+      '@taoro/math-point':
+        specifier: workspace:^
+        version: link:../../packages/math-point
+      '@taoro/math-rect':
+        specifier: workspace:^
+        version: link:../../packages/math-rect
+      '@taoro/renderer-2d':
+        specifier: workspace:^
+        version: link:../../packages/renderer-2d
+      '@taoro/renderer-raycaster-2d':
+        specifier: workspace:^
+        version: link:../../packages/renderer-raycaster-2d
+      '@taoro/resources':
+        specifier: workspace:^
+        version: link:../../packages/resources
+      '@taoro/scheduler':
+        specifier: workspace:^
+        version: link:../../packages/scheduler
+      '@taoro/viewport':
+        specifier: workspace:^
+        version: link:../../packages/viewport
+    devDependencies:
+      vite:
+        specifier: ^4.4.5
+        version: 4.4.5
+
   packages/audio:
     dependencies:
       '@taoro/audio-channel':
@@ -110,6 +171,9 @@ importers:
       '@taoro/math-rect':
         specifier: workspace:^
         version: link:../math-rect
+      '@taoro/pool':
+        specifier: workspace:^
+        version: link:../pool
 
   packages/component: {}
 
@@ -317,7 +381,17 @@ importers:
         specifier: workspace:^
         version: link:../math-rect
 
-  packages/renderer-raycaster-2d: {}
+  packages/renderer-raycaster-2d:
+    dependencies:
+      '@taoro/component':
+        specifier: workspace:^
+        version: link:../component
+      '@taoro/component-transform-2d':
+        specifier: workspace:^
+        version: link:../component-transform-2d
+      '@taoro/math-point':
+        specifier: workspace:^
+        version: link:../math-point
 
   packages/resource-loader:
     dependencies:
@@ -607,6 +681,15 @@ packages:
       source-map-js: 1.0.2
     dev: true
 
+  /postcss@8.4.27:
+    resolution: {integrity: sha512-gY/ACJtJPSmUFPDCHtX78+01fHa64FaU4zaaWfuh1MhGJISufJAH4cun6k/8fwsHYeK4UQmENQK+tRLCFJE8JQ==}
+    engines: {node: ^10 || ^12 || >=14}
+    dependencies:
+      nanoid: 3.3.6
+      picocolors: 1.0.0
+      source-map-js: 1.0.2
+    dev: true
+
   /rollup@3.26.2:
     resolution: {integrity: sha512-6umBIGVz93er97pMgQO08LuH3m6PUb3jlDUUGFsNJB6VgTCUaDFpupf5JfU30529m/UKOgmiX+uY6Sx8cOYpLA==}
     engines: {node: '>=14.18.0', npm: '>=8.0.0'}
@@ -650,6 +733,41 @@ packages:
     dependencies:
       esbuild: 0.18.11
       postcss: 8.4.25
+      rollup: 3.26.2
+    optionalDependencies:
+      fsevents: 2.3.2
+    dev: true
+
+  /vite@4.4.5:
+    resolution: {integrity: sha512-4m5kEtAWHYr0O1Fu7rZp64CfO1PsRGZlD3TAB32UmQlpd7qg15VF7ROqGN5CyqN7HFuwr7ICNM2+fDWRqFEKaA==}
+    engines: {node: ^14.18.0 || >=16.0.0}
+    hasBin: true
+    peerDependencies:
+      '@types/node': '>= 14'
+      less: '*'
+      lightningcss: ^1.21.0
+      sass: '*'
+      stylus: '*'
+      sugarss: '*'
+      terser: ^5.4.0
+    peerDependenciesMeta:
+      '@types/node':
+        optional: true
+      less:
+        optional: true
+      lightningcss:
+        optional: true
+      sass:
+        optional: true
+      stylus:
+        optional: true
+      sugarss:
+        optional: true
+      terser:
+        optional: true
+    dependencies:
+      esbuild: 0.18.11
+      postcss: 8.4.27
       rollup: 3.26.2
     optionalDependencies:
       fsevents: 2.3.2

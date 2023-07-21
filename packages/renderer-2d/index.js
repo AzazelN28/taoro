@@ -103,9 +103,10 @@ export class Renderer {
   #canvas = null
   #context = null
 
-  constructor(canvas) {
+  constructor(canvas, options) {
     this.#canvas = canvas
     this.#context = canvas.getContext('2d')
+    this.clear = options?.clear ?? true
   }
 
   get canvas() {
@@ -226,7 +227,9 @@ export class Renderer {
   }
 
   update() {
-    this.#context.clearRect(0, 0, this.#canvas.width, this.#canvas.height)
+    if (this.clear) {
+      this.#context.clearRect(0, 0, this.#canvas.width, this.#canvas.height)
+    }
     const components = Component.findByConstructor(ZIndexComponent)
     if (!components) {
       return

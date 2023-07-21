@@ -12,6 +12,11 @@ import { Runnable } from '@taoro/runnable'
  */
 export const INPUT_MAX_STATES = 4
 
+/**
+ * Device type
+ *
+ * @enum {number}
+ */
 export const InputDevice = {
   KEYBOARD: 0,
   MOUSE: 1,
@@ -20,6 +25,11 @@ export const InputDevice = {
   GAMEPAD: 4,
 }
 
+/**
+ * Input kind
+ *
+ * @enum {number}
+ */
 export const InputKind = {
   BUTTON: 0,
   AXIS: 1,
@@ -47,10 +57,22 @@ export class InputState {
     return this.#index
   }
 
+  /**
+   * Returns the state of the specified action.
+   *
+   * @param {string} name
+   * @returns {number}
+   */
   stateOf(name) {
     return this.#state.get(name) ?? 0.0
   }
 
+  /**
+   * Updates all input states.
+   *
+   * @param {Array<InputDevice>} devices
+   * @returns {boolean}
+   */
   update(devices) {
     if (!devices || !this.#bindings) {
       return false

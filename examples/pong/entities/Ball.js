@@ -1,6 +1,7 @@
 import { TransformComponent } from '@taoro/component-transform-2d'
 import { RectComponent } from '@taoro/renderer-2d'
 import { ColliderComponent } from '@taoro/collider-nano-2d'
+import { Rect } from '@taoro/math-rect'
 import { Point } from '@taoro/math-point'
 
 export function * Ball(game, score) {
@@ -13,19 +14,21 @@ export function * Ball(game, score) {
     game.viewport.currentHalfHeight
   )
 
-  const collider = new ColliderComponent('ball', { tag: 1 })
-  collider.rect.set(-8, -8, 16, 16)
+  const collider = new ColliderComponent('ball', {
+    tag: 1,
+    rects: [rect.rect.clone()]
+  })
 
   const velocity = new Point(4, 4)
 
   while (true) {
     if (collider.hasCollided) {
-      if (collider.collidesWith('left')) {
+      if (collider.collidesWithId('left')) {
         velocity.x = 4
       } else {
         velocity.x = -4
       }
-      game.sound.play(game.resources.get('coin.wav?taoro:as=buffer'))
+      game.sound.play(game.resources.get('coin.wav?taoro:as=audiobuffer'))
     }
 
     if (transform.position.x > game.viewport.currentWidth) {
@@ -50,7 +53,7 @@ export function * Ball(game, score) {
     ) {
       velocity.y *= -1
 
-      game.sound.play(game.resources.get('coin.wav?taoro:as=buffer'))
+      game.sound.play(game.resources.get('coin.wav?taoro:as=audiobuffer'))
     }
 
     transform.position.add(velocity)

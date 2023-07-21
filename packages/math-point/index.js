@@ -61,8 +61,16 @@ export class Point {
     return this.set(this.x + x, this.y + y)
   }
 
+  addScaled({ x, y }, scalar) {
+    return this.set(this.x + x * scalar, this.y + y * scalar)
+  }
+
   subtract({ x, y }) {
     return this.set(this.x - x, this.y - y)
+  }
+
+  subtractScaled({ x, y }, scalar) {
+    return this.set(this.x - x * scalar, this.y - y * scalar)
   }
 
   multiply({ x, y }) {

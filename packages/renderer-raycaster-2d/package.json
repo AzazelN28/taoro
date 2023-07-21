@@ -19,5 +19,10 @@
   },
   "files": [
     "index.js"
-  ]
+  ],
+  "dependencies": {
+    "@taoro/component": "workspace:^",
+    "@taoro/component-transform-2d": "workspace:^",
+    "@taoro/math-point": "workspace:^"
+  }
 }
