@@ -12,6 +12,11 @@ const componentsById = new Map()
  */
 const componentsByConstructor = new Map()
 
+globalThis.taoro = {
+  componentsById,
+  componentsByConstructor,
+}
+
 /**
  * Base class for all components.
  */

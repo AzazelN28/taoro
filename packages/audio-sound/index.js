@@ -1,9 +1,14 @@
 import { AudioChannelName } from '@taoro/audio-channel'
 
 /**
+ * Sound play options
  *
  * @typedef {Object} SoundPlayOptions
  * @property {Function} [onEnded=null]
+ * @property {number} [when=0]
+ * @property {number} [offset=0]
+ * @property {number} [duration=0]
+ * @property {number} [playbackRate=1]
  */
 
 /**

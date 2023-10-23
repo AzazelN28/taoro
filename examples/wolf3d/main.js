@@ -6,6 +6,7 @@ import { ViewportResizeMode } from '@taoro/viewport'
 import { Renderer as RendererRaycaster, Level } from '@taoro/renderer-raycaster-2d'
 import { Renderer as Renderer2D } from '@taoro/renderer-2d'
 import { Collider } from '@taoro/collider-nano-2d'
+import { Enemy } from './tasks/Enemy.js'
 import { Player } from './tasks/Player.js'
 
 async function start() {
@@ -15,13 +16,12 @@ async function start() {
   const collider = new Collider()
   const rendererRaycaster = new RendererRaycaster(canvas, {
     level: new Level(13, 13, [
-    //0  1  2  3  4  5  6  7  8  9  0  1  2
-      1, 1, 2, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0,
+      1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
       1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1, 1,
-      2, 0, 2, 0, 2, 3, 3, 0, 3, 0, 0, 0, 9,
-      5, 0, 0, 0, 0, 3, 0, 0, 0, 0, 0, 8, 8,
-      5, 5, 2, 0, 1, 0, 0, 0, 1, 0, 2, 1, 1,
-      5, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 9,
+      0, 0, 3, 0, 2, 3, 3, 0, 3, 0, 0, 0, 9,
+      1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 8, 8,
+      1, 1, 2, 9, 1, 0, 0, 0, 1, 0, 2, 1, 1,
+      1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 9,
       1, 0, 0, 0, 4, 0, 0, 0, 1, 0, 0, 0, 9,
       5, 0, 3, 3, 3, 0, 0, 0, 1, 0, 3, 3, 1,
       5, 0, 3, 4, 1, 5, 6, 7, 1, 0, 1, 1, 1,
@@ -36,7 +36,7 @@ async function start() {
   })
   game.viewport.mode = ViewportResizeMode.NONE
   game.viewport.width = 320
-  game.viewport.width = 200
+  game.viewport.height = 200
 
   game.pipeline.unshift(() => collider.update())
   game.pipeline.push(() => rendererRaycaster.update())
@@ -74,6 +74,7 @@ async function start() {
     console.log(Component.getComponentsById())
   })
 
+  game.scheduler.add(Enemy(game))
   game.scheduler.add(Player(game))
 
   game.start()

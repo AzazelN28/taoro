@@ -1,4 +1,5 @@
 import { Point } from '@taoro/math-point'
+import { Rect } from '@taoro/math-rect'
 import { Component } from '@taoro/component'
 import { TransformComponent } from '@taoro/component-transform-2d'
 
@@ -9,6 +10,8 @@ export const RaySide = {
   OUTSIDE: 3
 }
 
+const spriteMap = new Map()
+
 export class Level {
   #width = 0
   #height = 0
@@ -18,6 +21,10 @@ export class Level {
     this.#width = width
     this.#height = height
     this.#data = data
+    // this.textures = ''
+    // this.ceiling = ''
+    // this.floor = ''
+    // this.sky = ''
   }
 
   get width() {
@@ -128,15 +135,20 @@ export class Ray {
 }
 
 export class CameraComponent extends Component {
-  constructor(id, { fieldOfView = 0.66 } = {}) {
+  constructor(id, { x = 0, y = 0, width = 320, height = 200, fieldOfView = 0.66 } = {}) {
     super(id)
-    this.size = new Point(320, 200)
+    // this.imageData = new ImageData(width, height)
+    this.imageData = null
+    this.frameBuffer = null
+    this.fastFrameBuffer = null
+    this.depthBuffer = new Float32Array(width)
+    this.rect = new Rect(x, y, width, height)
     this.position = new Point()
     this.tile = new Point()
     this.direction = new Point()
     this.strafe = new Point()
-    this.halfSize = new Point(this.size.x / 2, this.size.y / 2)
-    this.fieldOfView = fieldOfView
+    this.fieldOfView = fieldOfView ?? 0.66
+
     this.plane = new Point(0, fieldOfView)
     this.start = new Point(1, -fieldOfView)
     this.end = new Point(-1, fieldOfView)
@@ -147,9 +159,11 @@ export class CameraComponent extends Component {
 export class SpriteComponent extends Component {
   constructor(id, { texture = null, width = 0, height = 0, pivot = null } = {}) {
     super(id)
-    this.texture = texture
-    this.width = width
-    this.height = height
+    this.relative = new Point()
+    this.distance = Infinity
+    this.texture = texture ?? null
+    this.width = width ?? 0
+    this.height = height ?? 0
     this.pivot = pivot ?? new Point()
   }
 }
@@ -161,9 +175,26 @@ export class Renderer {
 
   constructor(canvas, options) {
     this.#canvas = canvas
-    this.#context = canvas.getContext('2d')
+    this.#context = canvas.getContext('2d', {
+      willReadFrequently: true
+    })
     this.clear = options?.clear ?? true
+    // Nivel.
     this.level = options?.level ?? null
+    // Opciones de rendering.
+    this.textures = options?.textures ?? []
+    this.colors =
+      options?.colors ??
+      new Uint32Array([
+        0xff0000ff, 0x770000ff, 0x00ff00ff, 0x007700ff, 0x0000ffff, 0x000077ff,
+        0xffff00ff, 0x777700ff, 0xff00ffff, 0x770077ff, 0x00ffffff, 0x007777ff,
+        0xffffffff, 0x777777ff, 0xff7700ff, 0x773300ff, 0x00ff77ff, 0x007733ff,
+        0x0077ffff, 0x003377ff, 0xff77ffff, 0x773377ff,
+      ])
+    this.floor = options?.floor ?? true
+    this.ceiling = options?.ceiling ?? true
+    this.walls = options?.walls ?? true
+    this.sky = options?.sky ?? true
   }
 
   get canvas() {
@@ -174,90 +205,121 @@ export class Renderer {
     return this.#context
   }
 
-  update() {
-    if (this.clear) {
-      this.#context.clearRect(0, 0, this.#canvas.width, this.#canvas.height)
-    }
-
+  /**
+   * Updates cameras
+   *
+   * @returns
+   */
+  #updateCameras() {
     // Update the cameras first.
     const cameras = Component.findByConstructor(CameraComponent)
+    if (!cameras) {
+      return
+    }
+
     for (const camera of cameras) {
-      const transform = Component.findByIdAndConstructor(camera.id, TransformComponent)
+      const transform = Component.findByIdAndConstructor(
+        camera.id,
+        TransformComponent
+      )
       if (!transform) {
         continue
       }
-      camera.direction.polar(transform.rotation, 1.0)
-      camera.strafe.copy(camera.direction).perpLeft()
+
       camera.position.copy(transform.position)
       camera.tile.copy(camera.position).floor()
+      camera.direction.polar(transform.rotation)
+      camera.strafe.copy(camera.direction).perpRight()
       camera.plane.copy(camera.strafe).scale(camera.fieldOfView)
       camera.start.copy(camera.direction).subtract(camera.plane)
       camera.end.copy(camera.direction).add(camera.plane)
       camera.invDet = 1.0 / camera.plane.cross(camera.direction)
     }
+  }
 
+  /**
+   * Updates sprites
+   */
+  #updateSprites() {
     // Update the sprites.
     const sprites = Component.findByConstructor(SpriteComponent)
     if (sprites) {
+      const spriteTile = new Point()
       for (const sprite of sprites) {
+        const transform = Component.findByIdAndConstructor(
+          sprite.id,
+          TransformComponent
+        )
+        if (!transform) {
+          continue
+        }
 
+        spriteTile.copy(transform.position).floor()
+
+        const tile = spriteTile.y * this.level.width + spriteTile.x
+        if (!spriteMap.has(tile)) {
+          spriteMap.set(tile, new Set())
+        }
+        const spritesInTile = spriteMap.get(tile)
+        spritesInTile.add(sprite)
       }
     }
+  }
+
+  update() {
+    const projection = new Point()
+
+    if (this.clear) {
+      this.#context.clearRect(0, 0, this.#canvas.width, this.#canvas.height)
+    }
+
+    spriteMap.clear()
+
+    this.#updateCameras()
+    this.#updateSprites()
 
     this.#context.fillStyle = '#888'
     this.#context.fillRect(0, 0, this.#canvas.width, this.#canvas.height / 2)
 
     this.#context.fillStyle = '#666'
-    this.#context.fillRect(0, this.#canvas.height / 2, this.#canvas.width, this.#canvas.height / 2)
+    this.#context.fillRect(
+      0,
+      this.#canvas.height / 2,
+      this.#canvas.width,
+      this.#canvas.height / 2
+    )
 
-    const imageData = this.#context.getImageData(0, 0, this.#canvas.width, this.#canvas.height)
+    // Update the cameras first.
+    const cameras = Component.findByConstructor(CameraComponent)
+    if (!cameras) {
+      return
+    }
 
-    // Render the cameras.
-    const width = this.#canvas.width
-    const height = this.#canvas.height
-    const halfHeight = height / 2
-    const colors = [
-      '#f00',
-      '#700',
-      '#0f0',
-      '#070',
-      '#00f',
-      '#007',
-      '#ff0',
-      '#770',
-      '#f0f',
-      '#707',
-      '#0ff',
-      '#077',
-      '#fff',
-      '#777',
-      '#f70',
-      '#730',
-      '#f07',
-      '#703',
-      '#70f',
-      '#307',
-      '#0f7',
-      '#073',
-      '#07f',
-      '#037'
-    ]
-
+    const renderableSprites = []
     for (const camera of cameras) {
       // Limpiamos el set.
       this.#ray.updateFromCamera(camera)
 
+      const { width, height, halfWidth, halfHeight } = camera.rect
+      camera.imageData = this.#context.getImageData(0, 0, width, height)
+      camera.frameBuffer = camera.imageData.data
+      camera.fastFrameBuffer = new Uint32Array(camera.frameBuffer.buffer)
+      camera.depthBuffer.fill(Infinity)
+
       // Renderizamos cada columna.
       for (let x = 0; x < width; x++) {
         this.#ray.cast(this.level, camera, (x / width) * 2 - 1)
+
         if (this.#ray.side === RaySide.OUTSIDE) {
           continue
         }
 
+        camera.depthBuffer[x] = this.#ray.distance
+
         const columnHeight = Math.floor(height / this.#ray.distance)
         const columnHalfHeight = columnHeight >> 1
 
-        const texNum = this.#ray.data - 1
+        const texNum = (this.#ray.data - 1) * 2
 
         const drawStartY = Math.min(
           Math.max(0, Math.floor(-columnHalfHeight + halfHeight)),
@@ -271,25 +333,107 @@ export class Renderer {
         const drawHeight = drawEndY - drawStartY
 
         for (let y = drawStartY; y < drawEndY; y++) {
-          const offset = (y * this.#canvas.width + x) * 4
-          imageData.data[offset + 0] = this.#ray.side === RaySide.X ? 0xff : 0x77
-          imageData.data[offset + 1] = 0x00
-          imageData.data[offset + 2] = 0x00
-          imageData.data[offset + 3] = 0xff
+          const offset = (y * width + x)
+          const colorIndex = this.#ray.side === RaySide.X ? texNum : (texNum + 1)
+          const color = this.colors[colorIndex % this.colors.length]
+          camera.fastFrameBuffer[offset] = color
 
           /*
-          this.#context.fillStyle =
-            this.#ray.side === RaySide.X
-              ? colors[texNum * 2]
-              : colors[texNum * 2 + 1]
-          this.#context.fillRect(x, y, 1, 1)
+          camera.frameBuffer[offset + 0] =
+            this.#ray.side === RaySide.X ? 0xff : 0x77
+          camera.frameBuffer[offset + 1] = this.#ray.data === 9 ? 0xff : 0x00
+          camera.frameBuffer[offset + 2] = 0x00
+          camera.frameBuffer[offset + 3] = 0xff
           */
         }
       }
 
-      // TODO: Renderizar sprites
+      // TODO: Mejorar esto porque no tiene sentido
+      // tener que estar recorriendo estos arrays
+      // todo el rato. Creo que tendría más sentido
+      // que el valor #visited lo mantenga el renderer
+      // o el nivel y no el ray.
+      for (const tile of this.#ray.visited) {
+        if (!spriteMap.has(tile)) {
+          continue
+        }
+        const spritesInTile = spriteMap.get(tile)
+        renderableSprites.push(...spritesInTile)
+      }
 
-      this.#context.putImageData(imageData, 0, 0)
+      // Calculamos la distancia de los sprites a la vista sólo
+      // para aquellos sprites que están en el rango del visión
+      // del jugador.
+      for (const sprite of renderableSprites) {
+        const transform = Component.findByIdAndConstructor(
+          sprite.id,
+          TransformComponent
+        )
+        sprite.relative.x = transform.position.x - camera.position.x
+        sprite.relative.y = transform.position.y - camera.position.y
+        sprite.distance =
+          sprite.relative.x * sprite.relative.x +
+          sprite.relative.y * sprite.relative.y
+      }
+
+      // Reordenamos los sprites.
+      renderableSprites.sort((a, b) => b.distance - a.distance)
+
+      // Renderizamos los sprites.
+      let renderedSprites = 0
+      for (const sprite of renderableSprites) {
+        // Update sprite projection.
+        projection.set(
+          camera.invDet * sprite.relative.cross(camera.direction),
+          camera.invDet *
+            (-camera.plane.y * sprite.relative.x +
+              camera.plane.x * sprite.relative.y)
+        )
+
+        // If the sprite is behind the camera we don't need to render it.
+        if (projection.y < 0) {
+          continue
+        }
+
+        const spriteScreenX = Math.floor(
+          halfWidth * (1 + projection.x / projection.y)
+        )
+        const spriteScale = (1 / projection.y)
+        const spriteSize = Math.abs(Math.floor(height * spriteScale))
+        const spriteHalfSize = spriteSize >> 1
+        const spriteHeight = spriteSize
+        const spriteHalfHeight = spriteHalfSize
+        // const spriteWidth = spriteSize
+        const spriteHalfWidth = spriteHalfSize
+
+        const drawStartY = Math.floor(-spriteHalfHeight + halfHeight)
+        const drawEndY = Math.floor(spriteHalfHeight + halfHeight)
+        const drawStartX = Math.floor(-spriteHalfWidth + spriteScreenX)
+        const drawEndX = Math.floor(spriteHalfWidth + spriteScreenX)
+
+        const drawMinX = Math.max(0, drawStartX)
+        const drawMaxX = Math.min(width, drawEndX)
+        for (let x = drawMinX; x < drawMaxX; x++) {
+          if (projection.y > camera.depthBuffer[x]) {
+            continue
+          }
+
+          camera.depthBuffer[x] = projection.y
+
+          for (let y = drawStartY; y < drawEndY; y++) {
+            const offset = (y * width + x)
+            camera.fastFrameBuffer[offset] = this.colors[0]
+            // camera.frameBuffer[offset + 0] = 0x00
+            // camera.frameBuffer[offset + 1] = 0xff
+            // camera.frameBuffer[offset + 2] = 0x00
+            // camera.frameBuffer[offset + 3] = 0xff
+          }
+        }
+
+        renderedSprites++
+      }
+
+      this.#context.putImageData(camera.imageData, 0, 0)
     }
   }
 }

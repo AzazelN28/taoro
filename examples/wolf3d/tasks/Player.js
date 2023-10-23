@@ -23,9 +23,9 @@ export function * Player(game) {
 
   while (true) {
     if (game.input.keyboard.isPressed('ArrowLeft')) {
-      transform.rotation += 0.1
+      transform.rotation -= 0.05
     } else if (game.input.keyboard.isPressed('ArrowRight')) {
-      transform.rotation -= 0.1
+      transform.rotation += 0.05
     }
 
     if (game.input.keyboard.isPressed('ArrowUp') || game.input.keyboard.isPressed('KeyW')) {
@@ -39,6 +39,8 @@ export function * Player(game) {
     } else if (game.input.keyboard.isPressed('KeyD')) {
       transform.position.addScaled(camera.strafe, 0.1)
     }
+
+    // camera.fieldOfView = Math.abs(Math.sin(game.loop.currentTime / 10000 * Math.PI * 2)) + 0.6
     yield
   }
 

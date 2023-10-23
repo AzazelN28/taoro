@@ -23,6 +23,7 @@
   "dependencies": {
     "@taoro/component": "workspace:^",
     "@taoro/component-transform-2d": "workspace:^",
-    "@taoro/math-point": "workspace:^"
+    "@taoro/math-point": "workspace:^",
+    "@taoro/math-rect": "workspace:^"
   }
 }

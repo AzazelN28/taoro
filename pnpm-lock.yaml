@@ -136,6 +136,15 @@ importers:
         specifier: workspace:^
         version: link:../runnable
 
+  packages/audio-3d:
+    dependencies:
+      '@taoro/audio-channel':
+        specifier: workspace:^
+        version: link:../audio-channel
+      '@taoro/component':
+        specifier: workspace:^
+        version: link:../component
+
   packages/audio-channel: {}
 
   packages/audio-music:
@@ -392,6 +401,9 @@ importers:
       '@taoro/math-point':
         specifier: workspace:^
         version: link:../math-point
+      '@taoro/math-rect':
+        specifier: workspace:^
+        version: link:../math-rect
 
   packages/resource-loader:
     dependencies:
