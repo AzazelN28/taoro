@@ -1,0 +1,23 @@
+{
+  "name": "@taoro/math-matrix3",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "vitest"
+  },
+  "keywords": [
+    "taoro"
+  ],
+  "author": "AzazelN28 <asakon28@gmail.com>",
+  "license": "MIT",
+  "type": "module",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/AzazelN28/taoro.git",
+    "directory": "packages/math-matrix3"
+  },
+  "files": [
+    "index.js"
+  ]
+}

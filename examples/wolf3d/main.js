@@ -1,17 +1,27 @@
 import './style.css'
 import { Game } from '@taoro/game'
-import { InputDevice } from '@taoro/input'
+import { Audio3D } from '@taoro/audio-3d'
+import { InputDevice, InputKind } from '@taoro/input'
 import { Component } from '@taoro/component'
 import { ViewportResizeMode } from '@taoro/viewport'
 import { Renderer as RendererRaycaster2D, Level } from '@taoro/renderer-raycaster-2d'
 import { Renderer as Renderer2D } from '@taoro/renderer-2d'
 import { Collider } from '@taoro/collider-raycaster-2d'
-import { Enemy } from './tasks/Enemy.js'
-import { Player } from './tasks/Player.js'
+import { Enemy } from './entities/Enemy.js'
+import { Player } from './entities/Player.js'
+import { Decoration } from './entities/Decoration.js'
+import { Item, ItemType } from './entities/Item.js'
 
 async function start() {
+
   const canvas = document.querySelector('canvas')
+
   const game = new Game(canvas)
+  await game.resources.load('walls.png')
+  await game.resources.load('objects.png')
+  await game.resources.load('guard.png')
+  await game.resources.load('beep.mp3?taoro:as=audiobuffer')
+
   const level = new Level(13, 13, [
     1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
     1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1, 1,
@@ -30,9 +40,12 @@ async function start() {
   const collider = new Collider({
     level
   })
+  const textures = game.resources.get('walls.png')
   const rendererRaycaster2D = new RendererRaycaster2D(canvas, {
-    level
+    level,
+    textures
   })
+  const audio3D = new Audio3D(game.audio)
   const renderer2D = new Renderer2D(canvas, {
     clear: false
   })
@@ -40,6 +53,8 @@ async function start() {
   game.viewport.width = 320
   game.viewport.height = 200
 
+  // Configuramos los nuevos elementos del pipeline.
+  game.pipeline.push(() => audio3D.update())
   game.pipeline.unshift(() => collider.update())
   game.pipeline.push(() => rendererRaycaster2D.update())
   game.pipeline.push(() => renderer2D.update())
@@ -48,24 +63,56 @@ async function start() {
     if (state.index === 0) {
       return [
         [
-          'up',
+          'forward',
           [
             [InputDevice.KEYBOARD, ['KeyW']],
-            [InputDevice.GAMEPAD, [0, 1, 1, -1]],
+            [InputDevice.KEYBOARD, ['ArrowUp']],
+            [InputDevice.GAMEPAD, [0, InputKind.AXIS, 1, -1]],
           ],
         ],
         [
-          'down',
+          'backward',
           [
             [InputDevice.KEYBOARD, ['KeyS']],
-            [InputDevice.GAMEPAD, [0, 1, 1, 1]],
+            [InputDevice.KEYBOARD, ['ArrowDown']],
+            [InputDevice.GAMEPAD, [0, InputKind.AXIS, 1, 1]],
           ],
         ],
-      ]
-    } else if (state.index === 1) {
-      return [
-        ['up', [[InputDevice.KEYBOARD, ['ArrowUp']]]],
-        ['down', [[InputDevice.KEYBOARD, ['ArrowDown']]]],
+        [
+          'turn-left',
+          [
+            [InputDevice.KEYBOARD, ['ArrowLeft']],
+            [InputDevice.GAMEPAD, [0, InputKind.AXIS, 3, -1]],
+          ],
+        ],
+        [
+          'turn-right',
+          [
+            [InputDevice.KEYBOARD, ['ArrowRight']],
+            [InputDevice.GAMEPAD, [0, InputKind.AXIS, 3, 1]],
+          ],
+        ],
+        [
+          'strafe-left',
+          [
+            [InputDevice.KEYBOARD, ['KeyA']],
+            [InputDevice.GAMEPAD, [0, InputKind.AXIS, 0, -1]],
+          ],
+        ],
+        [
+          'strafe-right',
+          [
+            [InputDevice.KEYBOARD, ['KeyD']],
+            [InputDevice.GAMEPAD, [0, InputKind.AXIS, 0, 1]],
+          ],
+        ],
+        [
+          'fire',
+          [
+            [InputDevice.KEYBOARD, ['Space']],
+            [InputDevice.GAMEPAD, [0, InputKind.BUTTON, 0]],
+          ],
+        ],
       ]
     }
   })
@@ -78,6 +125,8 @@ async function start() {
 
   game.scheduler.add(Enemy(game))
   game.scheduler.add(Player(game))
+  game.scheduler.add(Decoration(game, 6.5, 4.5))
+  game.scheduler.add(Item(game, ItemType.DOG_FOOD, 5.5, 4.5))
 
   game.start()
   // game.stop()

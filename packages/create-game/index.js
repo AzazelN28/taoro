@@ -1,73 +1,50 @@
+#!/usr/bin/env node
 import fs from 'node:fs'
 import path from 'node:path'
+import prompts from 'prompts'
+import minimist from 'minimist'
 
-function getPackage(options) {
-const packageTemplate = `{
-  "packageName": "${options?.packageName ?? 'packageName'}",
-  "private": true,
-  "version": "1.0.0",
-  "type": "module",
-  "scripts": {
-    "dev": "vite",
-    "build": "vite build",
-    "preview": "vite preview"
-  },
-  "devDependencies": {
-    "vite": "^4.4.0"
-  },
-  "dependencies": {
-    "@taoro/component": "workspace:^",
-    "@taoro/component-transform-2d": "workspace:^",
-    "@taoro/game": "workspace:^",
-    "@taoro/input": "workspace:^",
-    "@taoro/math-point": "workspace:^",
-    "@taoro/math-rect": "workspace:^",
-    "@taoro/recorder": "workspace:^",
-    "@taoro/renderer-2d": "workspace:^"
-  }
-}`
-  return packageTemplate
+function templateResolve(...paths) {
+  return path.resolve(path.dirname(process.argv[1]), ...paths)
 }
 
-function getHTML() {
-`<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/javascript.svg" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Taoro Game</title>
-  </head>
-  <body>
-    <div id="game">
-      <canvas></canvas>
-    </div>
-    <!--
-        We need user gesture to start the game because
-        AudioContext and other APIs require it.
-      -->
-    <div id="user-gesture" class="overlay">
-      <svg class="play" width="256" height="256" viewBox="0 0 64 64">
-        <circle cx="32" cy="32" r="30"></circle>
-        <path d="M 24,20 48,32 24,44 Z"></path>
-      </svg>
-    </div>
-    <script type="module" src="/main.js"></script>
-  </body>
-</html>`
+async function templatePackage(dstPath, options) {
+  const content = await fs.promises.readFile(templateResolve('template', 'package.json'), 'utf-8')
+  const pkg = JSON.parse(content)
+  pkg.name = options.name
+  await fs.promises.writeFile(dstPath, JSON.stringify(pkg, null, 2), 'utf-8')
+}
+
+async function templateHTML(dstPath, options) {
+  const content = await fs.promises.readFile(templateResolve('template', 'index.html'), 'utf-8')
+  await fs.promises.writeFile(dstPath, content)
+}
+
+async function templateCopyFile(dstPath) {
+  const file = path.basename(dstPath)
+  await fs.promises.mkdir(path.dirname(dstPath), { recursive: true })
+  await fs.promises.copyFile(templateResolve('template', file), dstPath)
+}
+
+async function templateCreateDirectory(dstPath) {
+  await fs.promises.mkdir(dstPath, { recursive: true })
 }
 
 async function main() {
-
+  console.log(process.argv[0])
+  console.log(process.argv[1])
   const args = process.argv.slice(2)
-  try {
-    const packageName = args[0]
-    await fs.promises.mkdir(packageName, { recursive: true })
-    await fs.promises.writeFile(path.resolve(packageName, 'package.json'), getPackage({ packageName }), 'utf-8')
-  } catch (error) {
-    console.error(error)
-  }
-
+  const packageName = args[0]
+  await fs.promises.mkdir(packageName, { recursive: true })
+  await templatePackage(path.resolve(packageName, 'package.json'), { name: packageName })
+  await templateCreateDirectory(path.resolve(packageName, 'entities'))
+  await templateHTML(path.resolve(packageName, 'index.html'), { name: packageName })
+  await templateCopyFile(path.resolve(packageName, 'public', 'javascript.svg'))
+  await templateCopyFile(path.resolve(packageName, 'main.js'))
+  await templateCopyFile(path.resolve(packageName, 'style.css'))
+  await templateCopyFile(path.resolve(packageName, 'README.md'))
+  await templateCopyFile(path.resolve(packageName, '.editorconfig'))
+  await templateCopyFile(path.resolve(packageName, '.prettierrc'))
 }
 
 main()

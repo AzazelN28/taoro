@@ -9,6 +9,10 @@ import { Scheduler } from '@taoro/scheduler'
 import { Viewport } from '@taoro/viewport'
 import { FrameCounter } from '@taoro/frame-counter'
 
+/**
+ * Game
+ *
+ */
 export class Game {
   #loop = null
   #pipeline = null
@@ -24,6 +28,12 @@ export class Game {
   #resources = null
   #runnable = new Runnable()
 
+  /**
+   * Constructor
+   *
+   * @param {HTMLCanvasElement|OffscreenCanvas} canvas
+   * @param {GameOptions} [options]
+   */
   constructor(canvas, options = {}) {
     if (options?.globalThis ?? true) {
       globalThis.game = this
@@ -53,10 +63,18 @@ export class Game {
     ]
   }
 
+  /**
+   *
+   *
+   * @type {boolean}
+   */
   get isRunning() {
     return this.#runnable.isRunning
   }
 
+  /**
+   * @type {Loop}
+   */
   get loop() {
     return this.#loop
   }
@@ -105,6 +123,11 @@ export class Game {
     return this.#viewport
   }
 
+  /**
+   * Starts the game.
+   *
+   * @returns {boolean}
+   */
   start() {
     const result = this.#runnable.start()
     if (result) {
@@ -113,6 +136,11 @@ export class Game {
     return result
   }
 
+  /**
+   * Stops the game.
+   *
+   * @returns {boolean}
+   */
   stop() {
     const result = this.#runnable.stop()
     if (result) {

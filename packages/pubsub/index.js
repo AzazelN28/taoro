@@ -1,4 +1,7 @@
 class Subscriber {
+  #topics = []
+  #callback = null
+
   constructor(callback, topics = []) {
     if (typeof callback !== 'function') {
       throw new Error('')

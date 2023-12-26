@@ -85,6 +85,7 @@ export class Recorder {
     return MediaRecorder.isTypeSupported(...args)
   }
 
+  #recorder = null
   #state = RecorderState.STOPPED
   #timeout = null
   #autoSave = false

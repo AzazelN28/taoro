@@ -9,6 +9,25 @@ export class Rect {
     return new Rect(left, top, right - left, bottom - top)
   }
 
+  static isRect(value) {
+    return value instanceof Rect
+  }
+
+  static isRectLike(value) {
+    return (
+      typeof value === 'object' &&
+      value !== null &&
+      'x' in value &&
+      'y' in value &&
+      'width' in value &&
+      'height' in value &&
+      typeof value.x === 'number' &&
+      typeof value.y === 'number' &&
+      typeof value.width === 'number' &&
+      typeof value.height === 'number'
+    )
+  }
+
   #leftTop = new Point()
   #rightBottom = new Point()
 

@@ -1,0 +1,23 @@
+{
+  "name": "@taoro/math-vector2",
+  "version": "1.0.0",
+  "description": "Vector 2",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "test": "vitest"
+  },
+  "keywords": [
+    "taoro"
+  ],
+  "author": "AzazelN28 <asakon28@gmail.com>",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/AzazelN28/taoro.git",
+    "directory": "packages/math-vector2"
+  },
+  "files": [
+    "index.js"
+  ]
+}

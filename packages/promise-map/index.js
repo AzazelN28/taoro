@@ -28,6 +28,9 @@ export class PromiseMap {
   /**
    * Creates a new promise with the given id.
    *
+   * By default, all promises created in a `PromiseMap` has a timeout
+   * of 60 seconds.
+   *
    * @param {*} id
    * @param {number} [timeout=60000]
    * @returns {Promise}

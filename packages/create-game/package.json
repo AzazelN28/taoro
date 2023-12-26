@@ -1,20 +1,22 @@
 {
   "name": "@taoro/create-game",
-  "version": "1.0.2",
+  "version": "1.0.5",
   "description": "Game template generator for Taoro",
   "main": "index.js",
   "type": "module",
   "bin": {
-    "create-game": "index.js"
+    "create-game": "index.js",
+    "tcg": "index.js"
   },
   "files": [
+    "template",
     "index.js"
   ],
   "engines": {
     "node": ">=v18.16.0"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "vitest"
   },
   "keywords": [
     "taoro"
@@ -25,5 +27,10 @@
     "type": "git",
     "url": "https://github.com/AzazelN28/taoro.git",
     "directory": "packages/create-game"
+  },
+  "dependencies": {
+    "kolorist": "^1.8.0",
+    "minimist": "^1.2.8",
+    "prompts": "^2.4.2"
   }
 }

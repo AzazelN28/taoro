@@ -28,12 +28,12 @@ export function createMediaElement(tag, src, { muted = false, autoPlay = false, 
     }
     const element = document.createElement(tag)
     if (canPlayThrough) {
-      element.oncanplaythrough = () => resolve(element)
+      element.oncanplaythrough = _ => resolve(element)
     } else {
-      element.oncanplay = () => resolve(element)
+      element.oncanplay = _ => resolve(element)
     }
-    element.onabort = () => reject(new Error('Abort'))
-    element.onerror = () => reject(element.error)
+    element.onabort = _ => reject(new Error('Abort'))
+    element.onerror = _ => reject(element.error)
     element.muted = muted ?? false
     element.autoplay = autoPlay ?? false
     element.crossOrigin = crossOrigin ?? ''
@@ -75,8 +75,8 @@ export function createAudioElement(src, options) {
 export function createImageElement(src, { crossOrigin = 'anonymous', loading = 'eager', decoding = 'async' } = {}) {
   return new Promise((resolve, reject) => {
     const element = document.createElement('img')
-    element.onload = () => resolve(element)
-    element.onabort = () => reject(new Error('Abort'))
+    element.onload = _ => resolve(element)
+    element.onabort = _ => reject(new Error('Abort'))
     element.onerror = (error) => reject(error)
     element.crossOrigin = crossOrigin ?? ''
     element.decoding = decoding ?? 'async'

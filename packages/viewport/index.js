@@ -9,11 +9,14 @@ import { resizeAuto, resizeTo } from '@taoro/canvas'
  */
 class ViewportFullscreen {
   /**
+   * Canvas element used to manage viewport.
+   *
    * @type {HTMLCanvasElement}
    */
   #canvas = null
 
   /**
+   * Constructor
    *
    * @param {HTMLCanvasElement} canvas
    */
@@ -70,23 +73,14 @@ export const ViewportResizeMode = {
 }
 
 /**
- * We define a static method to check if a value is a valid ViewportResizeMode.
- * This is a non-enumerable property, so it won't show up in Object.keys()
- * or Object.values()
+ * Returns true if the value is a valid ViewportResizeMode.
  *
- * @nonenumerable
- * @function isResizeMode
- * @param {ViewportResizeMode} value
+ * @param {*} value
  * @returns {boolean}
  */
-Object.defineProperty(ViewportResizeMode, 'isResizeMode', {
-  enumerable: false,
-  configurable: false,
-  writable: false,
-  value: function (value) {
-    return Object.values(ViewportResizeMode).includes(value)
-  },
-})
+export function isResizeMode(value) {
+  return Object.values(ViewportResizeMode).includes(value)
+}
 
 /**
  * Options for the Viewport constructor.
@@ -119,42 +113,46 @@ export class Viewport {
    * @param {HTMLCanvasElement} canvas
    * @param {ViewportOptions} options
    */
-  constructor(
-    canvas,
-    {
-      mode = ViewportResizeMode.AUTO,
-      scale = 1.0,
-      width = 320,
-      height = 200,
-    } = {}
-  ) {
+  constructor(canvas, options) {
     this.#canvas = canvas
-    if (!ViewportResizeMode.isResizeMode(mode)) {
+    const mode = options?.mode ?? ViewportResizeMode.AUTO
+    if (!isResizeMode(mode)) {
       throw new Error(`Viewport: Invalid resize mode "${mode}"`)
     }
-    this.#mode = mode ?? ViewportResizeMode.AUTO
-    this.#width = width ?? 320
-    this.#height = height ?? 200
-    this.#scale = scale ?? 1.0
+    this.#mode = mode
+    this.#width = options?.width ?? 320
+    this.#height = options?.height ?? 200
+    this.#scale = options?.scale ?? 1.0
     this.#rect = new Rect()
     this.#fullscreen = new ViewportFullscreen(canvas)
   }
 
+  /**
+   * Indicates if the viewport is running.
+   *
+   * @type {boolean}
+   */
   get isRunning() {
     return this.#runnable.isRunning
   }
 
-  set mode(value) {
-    if (!ViewportResizeMode.isResizeMode(value)) {
+  /**
+   * @type {ViewportResizeMode}
+   */
+  set mode(mode) {
+    if (!isResizeMode(mode)) {
       throw new Error('Viewport: Invalid resize mode')
     }
-    this.#mode = value
+    this.#mode = mode
   }
 
   get mode() {
     return this.#mode
   }
 
+  /**
+   * @type {number}
+   */
   set scale(value) {
     if (!Number.isFinite(value) || value <= 0) {
       throw new Error('Viewport: Invalid resize scale')
@@ -166,22 +164,37 @@ export class Viewport {
     return this.#scale
   }
 
+  /**
+   * @type {number}
+   */
   get currentWidth() {
     return this.#canvas.width
   }
 
+  /**
+   * @type {number}
+   */
   get currentHeight() {
     return this.#canvas.height
   }
 
+  /**
+   * @type {number}
+   */
   get currentHalfWidth() {
     return this.#canvas.width / 2
   }
 
+  /**
+   * @type {number}
+   */
   get currentHalfHeight() {
     return this.#canvas.height / 2
   }
 
+  /**
+   * @type {number}
+   */
   set width(value) {
     if (!Number.isFinite(value) || value <= 0) {
       throw new Error('Viewport: Invalid resize width')
@@ -193,6 +206,9 @@ export class Viewport {
     return this.#width
   }
 
+  /**
+   * @type {number}
+   */
   set height(value) {
     if (!Number.isFinite(value) || value <= 0) {
       throw new Error('Viewport: Invalid resize height')
@@ -204,10 +220,44 @@ export class Viewport {
     return this.#height
   }
 
+  /**
+   * @type {number}
+   */
+  get aspectRatio() {
+    return this.#width / this.#height
+  }
+
+  /**
+   * @type {boolean}
+   */
+  get isSquare() {
+    return this.#width === this.#height
+  }
+
+  /**
+   * @type {boolean}
+   */
+  get isHorizontal() {
+    return this.#width > this.#height
+  }
+
+  /**
+   * @type {boolean}
+   */
+  get isVertical() {
+    return this.#width < this.#height
+  }
+
+  /**
+   * @type {Rect}
+   */
   get rect() {
     return this.#rect
   }
 
+  /**
+   * @type {ViewportFullscreen}
+   */
   get fullscreen() {
     return this.#fullscreen
   }
@@ -227,6 +277,31 @@ export class Viewport {
     }
   }
 
+  /**
+   * Sets the viewport options.
+   *
+   * @param {ViewportOptions} options
+   * @returns {Viewport}
+   */
+  set(options) {
+    if (options?.mode) {
+      this.mode = options.mode
+    }
+    if (options?.scale) {
+      this.scale = options.scale
+    }
+    if (options?.width) {
+      this.width = options.width
+    }
+    if (options?.height) {
+      this.height = options.height
+    }
+    return this
+  }
+
+  /**
+   * Updates the viewport.
+   */
   update() {
     let resized = false
     if (this.#mode === ViewportResizeMode.AUTO) {
@@ -242,6 +317,11 @@ export class Viewport {
     }
   }
 
+  /**
+   * Starts the viewport.
+   *
+   * @returns {boolean}
+   */
   start() {
     const result = this.#runnable.start()
     if (result) {
@@ -259,6 +339,11 @@ export class Viewport {
     return result
   }
 
+  /**
+   * Stops the viewport.
+   *
+   * @returns {boolean}
+   */
   stop() {
     const result = this.#runnable.stop()
     if (result) {

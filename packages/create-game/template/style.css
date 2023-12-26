@@ -1,0 +1,28 @@
+html, body {
+  margin: 0;
+  padding: 0;
+
+  width: 100%;
+  height: 100%;
+
+  background: #000;
+  color: #fff;
+
+  display: grid;
+  place-items: center;
+}
+
+canvas {
+  width: 100%;
+  height: auto;
+
+  aspect-ratio: 16 / 10;
+  image-rendering: pixelated;
+}
+
+@media screen and (min-aspect-ratio: 16 / 10) {
+  canvas {
+    width: auto;
+    height: 100%;
+  }
+} 

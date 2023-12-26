@@ -1,0 +1,27 @@
+{
+  "name": "@taoro/component-transform-3d",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "test": "vitest"
+  },
+  "keywords": [
+    "taoro"
+  ],
+  "author": "AzazelN28 <asakon28@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "@taoro/component": "workspace:^",
+    "@taoro/math-vector3": "workspace:^"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/AzazelN28/taoro.git",
+    "directory": "packages/component-transform-3d"
+  },
+  "files": [
+    "index.js"
+  ]
+}

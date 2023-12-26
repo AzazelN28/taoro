@@ -108,6 +108,9 @@ export class Pool {
    * @param {Function} factory Factory function to create objects.
    */
   constructor(size, factory) {
+    if (!Number.isInteger(size) || size < 1) {
+      throw new TypeError('Invalid size')
+    }
     this.#size = size
     this.#refs = new Array(size)
     for (let index = 0; index < size; index++) {
@@ -117,14 +120,23 @@ export class Pool {
     }
   }
 
+  /**
+   * @type {number}
+   */
   get size() {
     return this.#size
   }
 
+  /**
+   * @type {number}
+   */
   get available() {
     return this.#size - this.#count
   }
 
+  /**
+   * @type {number}
+   */
   get count() {
     return this.#count
   }

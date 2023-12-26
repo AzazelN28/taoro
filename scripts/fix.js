@@ -39,6 +39,12 @@ export async function fixPackageJSON(fileName, { dryRun = true } = {}) {
     if (!packageContent?.files) {
       packageContent.files = ['index.js']
     }
+    if (!packageContent?.scripts) {
+      packageContent.scripts = {}
+    }
+    if (!packageContent?.scripts?.test || packageContent.scripts.test !== 'vitest') {
+      packageContent.scripts.test = 'vitest'
+    }
     if (dryRun) {
       console.log(JSON.stringify(packageContent, null, 2))
       return numErrors

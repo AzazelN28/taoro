@@ -1,0 +1,23 @@
+{
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "devDependencies": {
+    "vite": "^4.4.0"
+  },
+  "dependencies": {
+    "@taoro/component": "^1.0.0",
+    "@taoro/component-transform-2d": "^1.0.0",
+    "@taoro/game": "^1.0.0",
+    "@taoro/input": "^1.0.0",
+    "@taoro/math-point": "^1.0.0",
+    "@taoro/math-rect": "^1.0.0",
+    "@taoro/recorder": "^1.0.0",
+    "@taoro/renderer-2d": "^1.0.0"
+  }
+}

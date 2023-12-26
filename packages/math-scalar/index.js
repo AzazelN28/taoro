@@ -138,8 +138,8 @@ export class Scalar {
     return this.value.toFixed(fractionDigits)
   }
 
-  toString() {
-    return this.value.toString()
+  toString(base = 10) {
+    return this.value.toString(base)
   }
 
   toJSON() {

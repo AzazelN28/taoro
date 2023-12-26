@@ -1,33 +1,42 @@
 /**
- * Registry of components by id.
- *
- * @type {Map<*, Array<Component>>}
- */
-const componentsById = new Map()
-
-/**
- * Registry of components by constructor.
- *
- * @type {Map<Function, Array<Component>>}
- */
-const componentsByConstructor = new Map()
-
-globalThis.taoro = {
-  componentsById,
-  componentsByConstructor,
-}
-
-/**
  * Base class for all components.
  */
 export class Component {
+  /**
+   * Registry of components by id.
+   *
+   * @type {Map<*, Array<Component>>}
+   */
+  static #componentsById = new Map()
+
+  /**
+   * Registry of components by constructor.
+   *
+   * @type {Map<Function, Array<Component>>}
+   */
+  static #componentsByConstructor = new Map()
+
+  /**
+   * Creates a unique id.
+   *
+   * @param {string} prefix
+   * @returns {string}
+   */
+  static createId(prefix = '') {
+    const id = Math.floor(Math.random() * Number.MAX_SAFE_INTEGER).toString(36)
+    if (prefix) {
+      return `${prefix}-${id}`
+    }
+    return id
+  }
+
   /**
    * Returns all components by id.
    *
    * @returns {Map<*, Array<Component>>}
    */
   static getComponentsById() {
-    return componentsById
+    return this.#componentsById
   }
 
   /**
@@ -36,7 +45,7 @@ export class Component {
    * @returns {Map<Function, Array<Component>>}
    */
   static getComponentsByConstructor() {
-    return componentsByConstructor
+    return this.#componentsByConstructor
   }
 
   /**
@@ -46,7 +55,7 @@ export class Component {
    * @returns {Array<Component>}
    */
   static findById(id) {
-    return componentsById.get(id)
+    return this.#componentsById.get(id)
   }
 
   /**
@@ -56,7 +65,7 @@ export class Component {
    * @returns {Array<Component>}
    */
   static findByConstructor(constructor) {
-    return componentsByConstructor.get(constructor)
+    return this.#componentsByConstructor.get(constructor)
   }
 
   /**
@@ -81,51 +90,79 @@ export class Component {
   /**
    * Registers the component with the given id.
    *
-   * @param {*} id
    * @param {Component} component
    */
-  static registerById(id, component) {
-    if (!componentsById.has(id)) {
-      componentsById.set(id, new Array())
+  static registerById(component) {
+    const id = component.id
+    if (!this.#componentsById.has(id)) {
+      this.#componentsById.set(id, new Array())
     }
-    const componentRegistry = componentsById.get(id)
+    const componentRegistry = this.#componentsById.get(id)
     componentRegistry.push(component)
   }
 
   /**
    * Registers the component with the given constructor.
    *
-   * @param {Function} constructor
    * @param {Component} component
    */
-  static registerByConstructor(constructor, component) {
-    if (!componentsByConstructor.has(constructor)) {
-      componentsByConstructor.set(constructor, new Array())
+  static registerByConstructor(component) {
+    const constructor = component.constructor
+    if (!this.#componentsByConstructor.has(constructor)) {
+      this.#componentsByConstructor.set(constructor, new Array())
     }
-    const componentRegistry = componentsByConstructor.get(constructor)
+    const componentRegistry = this.#componentsByConstructor.get(constructor)
     componentRegistry.push(component)
+  }
+
+  /**
+   * Registers the component.
+   *
+   * @param {Component} component
+   */
+  static register(component) {
+    this.registerById(component)
+    this.registerByConstructor(component)
   }
 
   /**
    * Unregisters the component with the given id.
    *
-   * @param {*} id
    * @param {Component} component
    */
-  static unregisterById(id, component) {
-    const componentRegistry = componentsById.get(id)
-    componentRegistry.splice(componentRegistry.indexOf(component), 1)
+  static unregisterById(component) {
+    const id = component.id
+    const componentRegistry = this.#componentsById.get(id)
+    const index = componentRegistry.indexOf(component)
+    if (index < 0) {
+      throw new Error('Component not found')
+    }
+    componentRegistry.splice(index, 1)
   }
 
   /**
    * Unregisters the component with the given constructor.
    *
-   * @param {Function} constructor
    * @param {Component} component
    */
-  static unregisterByConstructor(constructor, component) {
-    const componentRegistry = componentsByConstructor.get(constructor)
-    componentRegistry.splice(componentRegistry.indexOf(component), 1)
+  static unregisterByConstructor(component) {
+    const constructor = component.constructor
+    const componentRegistry = this.#componentsByConstructor.get(constructor)
+    const index = componentRegistry.indexOf(component)
+    if (index < 0) {
+      throw new Error('Component not found')
+    }
+    componentRegistry.splice(index, 1)
+  }
+
+  /**
+   * Unregisters component
+   *
+   * @param {Component} component
+   */
+  static unregister(component) {
+    this.unregisterById(component)
+    this.unregisterByConstructor(component)
   }
 
   /**
@@ -137,6 +174,15 @@ export class Component {
     for (const component of components) {
       component.unregister()
     }
+  }
+
+  /**
+   * Unregisters all components with the given id.
+   *
+   * @param {*} id
+   */
+  static unregisterAllById(id) {
+    this.#componentsById.get(id).forEach(component => component.unregister())
   }
 
   /**
@@ -153,8 +199,7 @@ export class Component {
    */
   constructor(id) {
     this.#id = id
-    Component.registerById(this.#id, this)
-    Component.registerByConstructor(this.constructor, this)
+    Component.register(this)
   }
 
   /**
@@ -172,8 +217,7 @@ export class Component {
    * destroyed.
    */
   unregister() {
-    Component.unregisterById(this.#id, this)
-    Component.unregisterByConstructor(this.constructor, this)
+    Component.unregister(this)
   }
 }
 

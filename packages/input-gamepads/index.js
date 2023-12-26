@@ -2,7 +2,21 @@ import { addEventListeners, removeEventListeners } from '@taoro/events'
 import { Runnable } from '@taoro/runnable'
 
 export const INPUT_GAMEPADS_DEFAULT_THRESHOLD = 0.5
+export const INPUT_GAMEPADS_DEFAULT_SIGN = 1
 
+/**
+ * Gamepad kind
+ *
+ * @enum {number}
+ */
+export const GamepadKind = {
+  BUTTON: 0,
+  AXIS: 1,
+}
+
+/**
+ *
+ */
 export class Gamepads {
   #connected = 0
   #gamepads = null
@@ -16,15 +30,36 @@ export class Gamepads {
 
   #runnable = new Runnable()
 
+  /**
+   * Indicates whether the gamepad input system is running.
+   *
+   * @type {boolean}
+   */
   get isRunning() {
     return this.#runnable.isRunning
   }
 
+  /**
+   * Number of connected gamepads.
+   *
+   * @type {number}
+   */
   get connected() {
     return this.#connected
   }
 
-  stateOf(index, kind, subindex, sign = 1, threshold = INPUT_GAMEPADS_DEFAULT_THRESHOLD) {
+  /**
+   * Returns the state of the specified element of the
+   * specified gamepad.
+   *
+   * @param {number} index
+   * @param {InputKind} kind
+   * @param {number} subindex
+   * @param {number} [sign=INPUT_GAMEPADS_DEFAULT_SIGN]
+   * @param {number} [threshold=INPUT_GAMEPADS_DEFAULT_THRESHOLD]
+   * @returns {number}
+   */
+  stateOf(index, kind, subindex, sign = INPUT_GAMEPADS_DEFAULT_SIGN, threshold = INPUT_GAMEPADS_DEFAULT_THRESHOLD) {
     if (!this.#gamepads) {
       return 0.0
     }
@@ -35,9 +70,9 @@ export class Gamepads {
     }
 
     let value = 0
-    if (kind === 1) {
+    if (kind === GamepadKind.AXIS) {
       value = gamepad.axes[subindex]
-    } else if (kind === 0) {
+    } else if (kind === GamepadKind.BUTTON) {
       value = gamepad.buttons[subindex].value
     }
     const absValue = Math.abs(value)
@@ -47,14 +82,37 @@ export class Gamepads {
     return absValue
   }
 
+  /**
+   * Returns true if the specified element of the specified
+   * gamepad is pressed.
+   *
+   * @param {number} index
+   * @param {InputKind} kind
+   * @param {number} subindex
+   * @param {number} [threshold=INPUT_GAMEPADS_DEFAULT_THRESHOLD]
+   * @returns {number}
+   */
   isPressed(index, kind, subindex, threshold = INPUT_GAMEPADS_DEFAULT_THRESHOLD) {
     return this.stateOf(index, kind, subindex) >= threshold
   }
 
+  /**
+   * Returns true if the specified element of the specified
+   * gamepad is released.
+   *
+   * @param {number} index
+   * @param {InputKind} kind
+   * @param {number} subindex
+   * @param {number} [threshold=INPUT_GAMEPADS_DEFAULT_THRESHOLD]
+   * @returns {number}
+   */
   isReleased(index, kind, subindex, threshold = INPUT_GAMEPADS_DEFAULT_THRESHOLD) {
     return !this.isPressed(index, kind, subindex, threshold)
   }
 
+  /**
+   * Updates the state of the gamepads.
+   */
   update() {
     this.#gamepads = navigator.getGamepads()
     this.#connected = 0
@@ -65,6 +123,11 @@ export class Gamepads {
     }
   }
 
+  /**
+   * Starts the gamepad input system.
+   *
+   * @returns {boolean}
+   */
   start() {
     const result = this.#runnable.start()
     if (result) {
@@ -73,6 +136,11 @@ export class Gamepads {
     return result
   }
 
+  /**
+   * Stops the gamepad input system.
+   *
+   * @returns {boolean}
+   */
   stop() {
     const result = this.#runnable.stop()
     if (result) {

@@ -21,22 +21,51 @@ export class Resources {
     this.baseURL = baseURL
   }
 
+  /**
+   * The total number of resources.
+   *
+   * @readonly
+   * @type {number}
+   */
   get total() {
     return this.#total
   }
 
+  /**
+   * The number of resources that have been loaded.
+   *
+   * @readonly
+   * @type {number}
+   */
   get loaded() {
     return this.#loaded
   }
 
+  /**
+   * The number of resources that have failed to load.
+   *
+   * @readonly
+   * @type {number}
+   */
   get failed() {
     return this.#failed
   }
 
+  /**
+   * Returns all the promises for the resources.
+   *
+   * @returns {Promise<[]>}
+   */
   all() {
     return Promise.allSettled(this.#promises.values())
   }
 
+  /**
+   * Returns true if the resource has been loaded.
+   *
+   * @param {string} url
+   * @returns {boolean}
+   */
   has(url) {
     return this.#resources.has(url)
   }

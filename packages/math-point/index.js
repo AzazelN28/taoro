@@ -122,11 +122,11 @@ export class Point {
   }
 
   distanceTo({ x, y }) {
-    return Math.hypot(this.x - x, this.y - y)
+    return Math.hypot(x - this.x, y - this.y)
   }
 
   angleTo({ x, y }) {
-    return Math.atan2(this.y - y, this.x - x)
+    return Math.atan2(y - this.y, x - this.x)
   }
 
   round() {

@@ -9,14 +9,21 @@
     "README.md"
   ],
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "vitest",
     "fix": "node scripts/fixAll.js",
     "verify": "node scripts/verifyAll.js",
-    "bump": "node scripts/bumpAll.js"
+    "bump": "node scripts/bumpAll.js",
+    "docs:dev": "vitepress dev docs",
+    "docs:build": "vitepress build docs",
+    "docs:preview": "vitepress preview docs"
   },
   "keywords": [
     "taoro"
   ],
   "author": "AzazelN28 <asakon28@gmail.com>",
-  "license": "MIT"
+  "license": "MIT",
+  "devDependencies": {
+    "vitepress": "1.0.0-rc.34",
+    "vitest": "^1.1.3"
+  }
 }

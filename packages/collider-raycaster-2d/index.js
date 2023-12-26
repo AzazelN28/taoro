@@ -12,6 +12,7 @@ export class ColliderComponent extends Component {
     this.radius = radius
     this.movement = new Point()
     this.collides = false
+    this.collisions = []
     this.nextPosition = new Point()
     this.nearestPoint = new Point()
     this.distanceToNearestPoint = new Point()
@@ -35,7 +36,12 @@ export class Collider {
       return
     }
 
-    /*
+    for (let index = 0; index < components.length; index++) {
+      const component = components[index]
+      component.collides = false
+      component.collisions.length = 0
+    }
+
     for (let aIndex = 0; aIndex < components.length - 1; ++aIndex) {
       const a = components[aIndex]
       for (let bIndex = aIndex + 1; bIndex < components.length; ++bIndex) {
@@ -44,17 +50,22 @@ export class Collider {
         const aTransform = Component.findByIdAndConstructor(a.id, TransformComponent)
         const bTransform = Component.findByIdAndConstructor(b.id, TransformComponent)
 
-        const distance = aTransform.position.distance(bTransform.position)
+        const distance = aTransform.position.distanceTo(bTransform.position)
         if (distance <= a.radius + b.radius) {
           a.collides = true
           b.collides = true
+          a.collisions.push(b.id)
+          b.collisions.push(a.id)
         }
       }
     }
-    */
 
     const tileRect = new Rect(0, 0, 1, 1)
     for (const component of components) {
+      if (component.radius <= 0) {
+        continue
+      }
+
       const transform = Component.findByIdAndConstructor(component.id, TransformComponent)
 
       // Reset collider component state.

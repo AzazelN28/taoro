@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/svg+xml" href="/javascript.svg" />
+    <title>Taoro Game</title>
+  </head>
+  <body>
+    <div id="game">
+      <canvas></canvas>
+    </div>
+    <!--
+      We need user gesture to start the game because
+      AudioContext and other APIs require it to ensure
+      that it is something the player wants.
+    -->
+    <div id="user-gesture" class="overlay">
+      <svg class="play" width="256" height="256" viewBox="0 0 64 64">
+        <circle cx="32" cy="32" r="30"></circle>
+        <path d="M 24,20 48,32 24,44 Z"></path>
+      </svg>
+    </div>
+    <script type="module" src="/main.js"></script>
+  </body>
+</html>

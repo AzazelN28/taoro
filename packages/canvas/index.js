@@ -22,6 +22,12 @@ export function isCanvas(canvas) {
  * @returns {HTMLCanvasElement}
  */
 export function createCanvasElement(width, height) {
+  if (!Number.isInteger(width) || width <= 0) {
+    throw new TypeError('width must be a positive integer')
+  }
+  if (!Number.isInteger(height) || height <= 0) {
+    throw new TypeError('height must be a positive integer')
+  }
   const canvas = document.createElement('canvas')
   canvas.width = width
   canvas.height = height
@@ -37,6 +43,12 @@ export function createCanvasElement(width, height) {
  * @returns {OffscreenCanvas|HTMLCanvasElement}
  */
 export function createOffscreenCanvas(width, height) {
+  if (!Number.isInteger(width) || width <= 0) {
+    throw new TypeError('width must be a positive integer')
+  }
+  if (!Number.isInteger(height) || height <= 0) {
+    throw new TypeError('height must be a positive integer')
+  }
   if (!('OffscreenCanvas' in globalThis)) {
     return createCanvasElement(width, height)
   }

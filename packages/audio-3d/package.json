@@ -1,16 +1,30 @@
 {
-  "name": "audio-3d",
+  "name": "@taoro/audio-3d",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
+  "type": "module",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "vitest"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
+  "keywords": [
+    "taoro"
+  ],
+  "author": "AzazelN28 <asakon28@gmail.com>",
+  "license": "MIT",
   "dependencies": {
     "@taoro/audio-channel": "workspace:^",
-    "@taoro/component": "workspace:^"
-  }
+    "@taoro/component": "workspace:^",
+    "@taoro/component-transform-2d": "workspace:^",
+    "@taoro/component-transform-3d": "workspace:^",
+    "@taoro/math-vector3": "workspace:^"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/AzazelN28/taoro.git",
+    "directory": "packages/audio-3d"
+  },
+  "files": [
+    "index.js"
+  ]
 }

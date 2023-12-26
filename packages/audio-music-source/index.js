@@ -1,5 +1,5 @@
 /**
- *
+ * MusicSource
  *
  */
 export class MusicSource {
@@ -20,18 +20,37 @@ export class MusicSource {
     this.#buffer = buffer
   }
 
+  /**
+   * Sets the current buffer.
+   */
   set buffer(newBuffer) {
     this.#buffer = newBuffer
   }
 
+  /**
+   * Gets the current buffer.
+   *
+   * @type {AudioBuffer}
+   */
   get buffer() {
     return this.#buffer
   }
 
+  /**
+   * Returns if the current music source is playing
+   *
+   * @type {boolean}
+   */
   get isPlaying() {
     return this.#bufferSourceNode !== null
   }
 
+  /**
+   * Fades in the current music source.
+   *
+   * @param {number} duration
+   * @returns {MusicSource}
+   */
   fadeIn(duration = 1) {
     this.#gainNode.gain.setValueAtTime(0, this.#audioContext.currentTime)
     this.#gainNode.gain.linearRampToValueAtTime(
@@ -41,6 +60,12 @@ export class MusicSource {
     return this
   }
 
+  /**
+   * Fades out the current music source.
+   *
+   * @param {number} duration
+   * @returns {MusicSource}
+   */
   fadeOut(duration = 1) {
     this.#gainNode.gain.linearRampToValueAtTime(
       0,

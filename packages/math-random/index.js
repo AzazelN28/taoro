@@ -33,8 +33,83 @@ export function roll(sides, random = MATH_RANDOM_DEFAULT_FUNCTION) {
   return 1 + Math.floor(random() * sides)
 }
 
+/**
+ * Return a random index from the list.
+ *
+ * @param {Array} list
+ * @param {Function} [random=MATH_RANDOM_DEFAULT_FUNCTION]
+ * @returns {number}
+ */
+export function index(list, random = MATH_RANDOM_DEFAULT_FUNCTION) {
+  return Math.floor(random() * list.length)
+}
+
+/**
+ * Returns a random element from the list.
+ *
+ * @param {Array} list
+ * @param {Function} [random=MATH_RANDOM_DEFAULT_FUNCTION]
+ * @returns {*}
+ */
+export function pickOne(list, random = MATH_RANDOM_DEFAULT_FUNCTION) {
+  return list[index(list, random)]
+}
+
+/**
+ * Returns the specified number of random elements from the list.
+ *
+ * @param {Array} list
+ * @param {number} count
+ * @param {Function} [random=MATH_RANDOM_DEFAULT_FUNCTION]
+ * @returns {Array<*>}
+ */
+export function pick(list, count, random = MATH_RANDOM_DEFAULT_FUNCTION) {
+  const result = []
+  for (let i = 0; i < count; i++) {
+    result.push(pickOne(list, random))
+  }
+  return result
+}
+
+/**
+ * Returns a random element from the list and removes it.
+ *
+ * @param {Array} list
+ * @param {Function} [random=MATH_RANDOM_DEFAULT_FUNCTION]
+ * @returns {*}
+ */
+export function takeOne(list, random = MATH_RANDOM_DEFAULT_FUNCTION) {
+  const [removed] = list.slice(index(list, random), 1)
+  return removed
+}
+
+/**
+ * Returns the specified number of random elements from the
+ * list and removes them.
+ *
+ * @param {Array} list
+ * @param {number} count
+ * @param {Function} [random=MATH_RANDOM_DEFAULT_FUNCTION]
+ * @returns {Array<*>}
+ */
+export function take(list, count, random = MATH_RANDOM_DEFAULT_FUNCTION) {
+  const result = []
+  for (let i = 0; i < count; i++) {
+    const value = takeOne(list, random)
+    if (value !== undefined) {
+      result.push(value)
+    }
+  }
+  return result
+}
+
 export default {
   angle,
   between,
-  roll
+  roll,
+  index,
+  pickOne,
+  pick,
+  takeOne,
+  take
 }

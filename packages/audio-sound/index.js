@@ -42,7 +42,10 @@ export class Sound {
     const bufferSourceNode = this.#audio.audioContext.createBufferSource()
     bufferSourceNode.buffer = buffer
     if (Number.isFinite(options?.playbackRate)) {
-      bufferSourceNode.playbackRate.value = options?.playbackRate
+      bufferSourceNode.playbackRate.value = options?.playbackRate ?? 1
+    }
+    if (Number.isFinite(options?.detune)) {
+      bufferSourceNode.detune.value = options?.detune ?? 0
     }
     bufferSourceNode.connect(this.#audio.get(this.#channelName).destination)
     bufferSourceNode.start(

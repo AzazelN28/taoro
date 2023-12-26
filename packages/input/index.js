@@ -163,9 +163,21 @@ export class Input {
   }
 
   /**
-   * Returns the state of the input devices assigned to the specified index.
+   * Returns the state of the input devices assigned to any
+   * index.
    *
-   * @param {number} [index=0]
+   * @param {string} action
+   * @returns {Map<string, any>}
+   */
+  stateOfAny(action) {
+
+  }
+
+  /**
+   * Returns the state of the input devices assigned to the
+   * specified index.
+   *
+   * @param {number} index
    * @param {string} action
    * @returns {Map<string, any>}
    */
