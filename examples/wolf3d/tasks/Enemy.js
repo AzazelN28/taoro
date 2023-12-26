@@ -1,5 +1,6 @@
 import { TransformComponent } from '@taoro/component-transform-2d'
 import { SpriteComponent } from '@taoro/renderer-raycaster-2d'
+import { ColliderComponent } from '@taoro/collider-raycaster-2d'
 
 export function * Enemy(game) {
   const transform = new TransformComponent('enemy', {

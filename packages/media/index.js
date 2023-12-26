@@ -1,4 +1,19 @@
 /**
+ * @typedef {object} CreateMediaElementOptions
+ * @property {boolean} [muted=false]
+ * @property {boolean} [autoPlay=false]
+ * @property {string} [crossOrigin='anonymous']
+ * @property {boolean} [canPlayThrough=true]
+ */
+
+/**
+ * @typedef {object} CreateImageOptions
+ * @property {string} [crossOrigin='anonymous']
+ * @property {'eager'|'lazy'} [loading='eager']
+ * @property {'async'|'sync'} [decoding='async']
+ */
+
+/**
  * Creates a media element.
  *
  * @param {'audio'|'video'} tag
@@ -30,7 +45,7 @@ export function createMediaElement(tag, src, { muted = false, autoPlay = false, 
  * Creates a video element.
  *
  * @param {string} src
- * @param {CreateVideoElementOptions} [options]
+ * @param {CreateMediaElementOptions} [options]
  * @returns {HTMLVideoElement}
  */
 export function createVideoElement(src, options) {
@@ -41,7 +56,7 @@ export function createVideoElement(src, options) {
  * Creates an audio element.
  *
  * @param {string} src
- * @param {CreateAudioElementOptions} [options]
+ * @param {CreateMediaElementOptions} [options]
  * @returns {HTMLAudioElement}
  */
 export function createAudioElement(src, options) {
@@ -50,6 +65,8 @@ export function createAudioElement(src, options) {
 
 /**
  * Creates an image element.
+ *
+ * TODO: Add support for SVG Image elements.
  *
  * @param {string} src
  * @param {CreateImageOptions} [options]

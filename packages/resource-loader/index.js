@@ -1,5 +1,11 @@
 import { createAudioElement, createVideoElement, createImageElement } from "@taoro/media"
 
+/**
+ * Returns an <style> element from a response.
+ *
+ * @param {Response} response
+ * @returns {Promise<HTMLStyleElement>}
+ */
 export async function getAsStyle(response) {
   const text = await response.text()
   const style = document.createElement('style')
@@ -7,12 +13,24 @@ export async function getAsStyle(response) {
   return style
 }
 
+/**
+ * Returns a URL from a response (blob).
+ *
+ * @param {Response} response
+ * @returns {Promise<string>}
+ */
 export async function getAsURL(response) {
   const blob = await response.blob()
   const url = URL.createObjectURL(blob)
   return url
 }
 
+/**
+ *
+ * @param {Response} response
+ * @param {FontFaceDescription} [description]
+ * @returns {Promise<FontFace>}
+ */
 export async function getAsFontFace(response, { family, descriptors } = {}) {
   const url = new URL(response.url)
   console.log(url)
@@ -42,6 +60,12 @@ export async function getAsFontFace(response, { family, descriptors } = {}) {
   return fontFace
 }
 
+/**
+ *
+ * @param {Response} response
+ * @param {DocumentDescription} options
+ * @returns {Promise<Document>}
+ */
 export async function getAsDocument(response, { contentType } = {}) {
   const textContentType =
     contentType ?? response.headers.get('Content-Type') ?? 'text/xml'
@@ -54,18 +78,38 @@ export async function getAsDocument(response, { contentType } = {}) {
   return document
 }
 
+/**
+ * Returns an <img> element from a response.
+ *
+ * @param {Response} response
+ * @param {CreateImageOptions} options
+ * @returns {Promise<HTMLImageElement>}
+ */
 export async function getAsImageElement(response, options) {
   const blob = await response.blob()
   const url = URL.createObjectURL(blob)
   return createImageElement(url, options)
 }
 
+/**
+ * Returns an ImageBitmap from a response.
+ *
+ * @param {Response} response
+ * @param {CreateImageBitmapOptions} options
+ * @returns {Promise<ImageBitmap>}
+ */
 export async function getAsImageBitmap(response, options) {
   const blob = await response.blob()
   const imageBitmap = await createImageBitmap(blob, options)
   return imageBitmap
 }
 
+/**
+ *
+ * @param {*} response
+ * @param {*} options
+ * @returns
+ */
 export async function getAsImage(response, options) {
   const url = new URL(response.url)
   if (url.searchParams.get('taoro:as') === 'imagebitmap') {

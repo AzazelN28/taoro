@@ -83,6 +83,9 @@ importers:
       '@taoro/collider-nano-2d':
         specifier: workspace:^
         version: link:../../packages/collider-nano-2d
+      '@taoro/collider-raycaster-2d':
+        specifier: workspace:^
+        version: link:../../packages/collider-raycaster-2d
       '@taoro/component':
         specifier: workspace:^
         version: link:../../packages/component
@@ -183,6 +186,21 @@ importers:
       '@taoro/pool':
         specifier: workspace:^
         version: link:../pool
+
+  packages/collider-raycaster-2d:
+    dependencies:
+      '@taoro/component':
+        specifier: workspace:^
+        version: link:../component
+      '@taoro/component-transform-2d':
+        specifier: workspace:^
+        version: link:../component-transform-2d
+      '@taoro/math-point':
+        specifier: workspace:^
+        version: link:../math-point
+      '@taoro/math-rect':
+        specifier: workspace:^
+        version: link:../math-rect
 
   packages/component: {}
 

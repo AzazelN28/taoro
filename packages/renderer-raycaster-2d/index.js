@@ -171,16 +171,17 @@ export class SpriteComponent extends Component {
 export class Renderer {
   #canvas = null
   #context = null
+  #level = null
   #ray = new Ray()
 
   constructor(canvas, options) {
     this.#canvas = canvas
     this.#context = canvas.getContext('2d', {
-      willReadFrequently: true
+      willReadFrequently: true,
     })
-    this.clear = options?.clear ?? true
     // Nivel.
-    this.level = options?.level ?? null
+    this.#level = options.level
+    this.clear = options?.clear ?? true
     // Opciones de rendering.
     this.textures = options?.textures ?? []
     this.colors =
@@ -256,7 +257,7 @@ export class Renderer {
 
         spriteTile.copy(transform.position).floor()
 
-        const tile = spriteTile.y * this.level.width + spriteTile.x
+        const tile = spriteTile.y * this.#level.width + spriteTile.x
         if (!spriteMap.has(tile)) {
           spriteMap.set(tile, new Set())
         }
@@ -308,7 +309,7 @@ export class Renderer {
 
       // Renderizamos cada columna.
       for (let x = 0; x < width; x++) {
-        this.#ray.cast(this.level, camera, (x / width) * 2 - 1)
+        this.#ray.cast(this.#level, camera, (x / width) * 2 - 1)
 
         if (this.#ray.side === RaySide.OUTSIDE) {
           continue

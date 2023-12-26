@@ -1,5 +1,9 @@
 import ResourceLoader from '@taoro/resource-loader'
 
+/**
+ * A resource manager that keeps track of all the resources
+ * loaded, failed and pending.
+ */
 export class Resources {
   #promises = new Map()
   #resources = new Map()
@@ -8,6 +12,11 @@ export class Resources {
   #loaded = 0
   #failed = 0
 
+  /**
+   * Creates a new resources manager.
+   *
+   * @param {URL|string} baseURL
+   */
   constructor(baseURL) {
     this.baseURL = baseURL
   }

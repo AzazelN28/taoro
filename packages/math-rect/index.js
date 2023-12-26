@@ -5,6 +5,13 @@ export class Rect {
     return new Rect(x, y, width, height)
   }
 
+  static createFromBounds(left = 0, top = 0, right = 0, bottom = 0) {
+    return new Rect(left, top, right - left, bottom - top)
+  }
+
+  #leftTop = new Point()
+  #rightBottom = new Point()
+
   #position = new Point()
   #size = new Point()
 
@@ -23,6 +30,14 @@ export class Rect {
 
   get size() {
     return this.#size
+  }
+
+  get leftTop() {
+    return this.#leftTop
+  }
+
+  get rightBottom() {
+    return this.#rightBottom
   }
 
   get x() {
@@ -121,19 +136,40 @@ export class Rect {
     this.#position.y = value - this.#size.y / 2
   }
 
+  get isDegenerate() {
+    return this.width <= 0 || this.height <= 0
+  }
+
+  get isSquare() {
+    return this.width === this.height
+  }
+
+  get isHorizontal() {
+    return this.width > this.height
+  }
+
+  get isVertical() {
+    return this.width < this.height
+  }
+
   setPosition(x, y) {
     this.#position.set(x, y)
+    this.#leftTop.set(this.left, this.top)
+    this.#rightBottom.set(this.right, this.bottom)
     return this
   }
 
   setSize(width, height) {
     this.#size.set(width, height)
+    this.#rightBottom.set(this.right, this.bottom)
     return this
   }
 
   set(x, y, width, height) {
     this.#position.set(x, y)
     this.#size.set(width, height)
+    this.#leftTop.set(this.left, this.top)
+    this.#rightBottom.set(this.right, this.bottom)
     return this
   }
 

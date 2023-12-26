@@ -17,6 +17,7 @@
     "@taoro/audio-sound": "workspace:^",
     "@taoro/canvas": "workspace:^",
     "@taoro/collider-nano-2d": "workspace:^",
+    "@taoro/collider-raycaster-2d": "workspace:^",
     "@taoro/component": "workspace:^",
     "@taoro/component-transform-2d": "workspace:^",
     "@taoro/core": "workspace:^",

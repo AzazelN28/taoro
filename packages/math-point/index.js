@@ -38,6 +38,13 @@ export class Point {
     return this
   }
 
+  clamp(min, max) {
+    return this.set(
+      Math.max(min.x, Math.min(max.x, this.x)),
+      Math.max(min.y, Math.min(max.y, this.y))
+    )
+  }
+
   reset() {
     return this.set(0, 0)
   }

@@ -1,12 +1,20 @@
 export const EPSILON = 0.00001
 
 export class Scalar {
+  static from(value, min, max) {
+    return (value - min) / (max - min)
+  }
+
   static isBetween(value, min, max) {
     return value >= min && value <= max
   }
 
   static areEqual(a, b) {
     return a === b
+  }
+
+  static areAlmostEqual(a, b, epsilon = EPSILON) {
+    return Math.abs(a - b) < epsilon
   }
 
   static greaterThan(a, b) {
@@ -23,10 +31,6 @@ export class Scalar {
 
   static lessOrEqualTo(a, b) {
     return a <= b
-  }
-
-  static areAlmostEqual(a, b, epsilon = EPISLON) {
-    return Math.abs(a - b) < epsilon
   }
 
   static add(a, b) {

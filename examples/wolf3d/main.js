@@ -3,33 +3,35 @@ import { Game } from '@taoro/game'
 import { InputDevice } from '@taoro/input'
 import { Component } from '@taoro/component'
 import { ViewportResizeMode } from '@taoro/viewport'
-import { Renderer as RendererRaycaster, Level } from '@taoro/renderer-raycaster-2d'
+import { Renderer as RendererRaycaster2D, Level } from '@taoro/renderer-raycaster-2d'
 import { Renderer as Renderer2D } from '@taoro/renderer-2d'
-import { Collider } from '@taoro/collider-nano-2d'
+import { Collider } from '@taoro/collider-raycaster-2d'
 import { Enemy } from './tasks/Enemy.js'
 import { Player } from './tasks/Player.js'
 
 async function start() {
   const canvas = document.querySelector('canvas')
   const game = new Game(canvas)
-
-  const collider = new Collider()
-  const rendererRaycaster = new RendererRaycaster(canvas, {
-    level: new Level(13, 13, [
-      1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
-      1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1, 1,
-      0, 0, 3, 0, 2, 3, 3, 0, 3, 0, 0, 0, 9,
-      1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 8, 8,
-      1, 1, 2, 9, 1, 0, 0, 0, 1, 0, 2, 1, 1,
-      1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 9,
-      1, 0, 0, 0, 4, 0, 0, 0, 1, 0, 0, 0, 9,
-      5, 0, 3, 3, 3, 0, 0, 0, 1, 0, 3, 3, 1,
-      5, 0, 3, 4, 1, 5, 6, 7, 1, 0, 1, 1, 1,
-      5, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 9,
-      5, 0, 0, 0, 4, 0, 5, 0, 1, 0, 0, 0, 9,
-      5, 0, 3, 3, 3, 0, 0, 0, 1, 0, 3, 3, 1,
-      1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
-    ])
+  const level = new Level(13, 13, [
+    1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
+    1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1, 1,
+    0, 0, 3, 0, 2, 3, 3, 0, 3, 0, 0, 0, 9,
+    1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 8, 8,
+    1, 1, 2, 9, 1, 0, 0, 0, 1, 0, 2, 1, 1,
+    1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 9,
+    1, 0, 0, 0, 4, 0, 0, 0, 1, 0, 0, 0, 9,
+    5, 0, 3, 3, 3, 0, 0, 0, 1, 0, 3, 3, 1,
+    5, 0, 3, 4, 1, 5, 6, 7, 1, 0, 1, 1, 1,
+    5, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 9,
+    5, 0, 0, 0, 4, 0, 5, 0, 1, 0, 0, 0, 9,
+    5, 0, 3, 3, 3, 0, 0, 0, 1, 0, 3, 3, 1,
+    1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
+  ])
+  const collider = new Collider({
+    level
+  })
+  const rendererRaycaster2D = new RendererRaycaster2D(canvas, {
+    level
   })
   const renderer2D = new Renderer2D(canvas, {
     clear: false
@@ -39,7 +41,7 @@ async function start() {
   game.viewport.height = 200
 
   game.pipeline.unshift(() => collider.update())
-  game.pipeline.push(() => rendererRaycaster.update())
+  game.pipeline.push(() => rendererRaycaster2D.update())
   game.pipeline.push(() => renderer2D.update())
 
   game.input.setBindings(0, (state) => {
