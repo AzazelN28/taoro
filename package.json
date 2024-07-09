@@ -10,6 +10,7 @@
   ],
   "scripts": {
     "test": "vitest",
+    "coverage": "vitest run --coverage",
     "fix": "node scripts/fixAll.js",
     "verify": "node scripts/verifyAll.js",
     "bump": "node scripts/bumpAll.js",

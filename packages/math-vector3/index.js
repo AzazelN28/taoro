@@ -1,14 +1,18 @@
 export class Vector3 {
-  static create(x = 0, y = 0) {
-    return new Vector3(x, y)
+  static create(x = 0, y = 0, z = 0) {
+    return new Vector3(x, y, z)
   }
 
-  static isFinite({ x, y }) {
-    return Number.isFinite(x) && Number.isFinite(y)
+  static from({ x, y, z })  {
+    return new Vector3(x, y, z)
   }
 
-  static isInteger({ x, y }) {
-    return Number.isInteger(x) && Number.isInteger(y)
+  static isFinite({ x, y, z }) {
+    return Number.isFinite(x) && Number.isFinite(y) && Number.isFinite(z)
+  }
+
+  static isInteger({ x, y, z }) {
+    return Number.isInteger(x) && Number.isInteger(y) && Number.isFinite(z)
   }
 
   static isZero({ x, y }) {
@@ -34,6 +38,14 @@ export class Vector3 {
     this.y = y
     this.z = z
     return this
+  }
+
+  clamp(min, max) {
+    return this.set(
+      Math.max(min.x, Math.min(max.x, this.x)),
+      Math.max(min.y, Math.min(max.y, this.y)),
+      Math.max(min.z, Math.min(max.z, this.z)),
+    )
   }
 
   reset() {

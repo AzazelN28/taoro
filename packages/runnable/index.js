@@ -5,9 +5,9 @@ export class Runnable {
   #isRunning = false
 
   /**
+   * Constructor
    *
-   *
-   * @param {boolean} [isRunning=false]
+   * @param {boolean} [isRunning=false] Indicates the initial state of the runnable
    */
   constructor(isRunning = false) {
     this.#isRunning = isRunning

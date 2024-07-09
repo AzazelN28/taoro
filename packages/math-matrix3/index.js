@@ -1,14 +1,18 @@
+export const ELEMENTS = 9
+
 export default class Matrix3 {
+  static ELEMENTS = 9
+
   #rawData = null
 
-  constructor(rawData = new Array(9)) {
-    this.#rawData = rawData ?? new Array(9)
+  constructor(rawData = new Array(Matrix3.ELEMENTS)) {
+    this.#rawData = rawData ?? new Array(Matrix3.ELEMENTS)
   }
 
   set(...args) {
     if (args.length === 0) return this
 
-    this.#rawData.set(args.slice(0, 16), 0)
+    this.#rawData.set(args.slice(0, Matrix3.ELEMENTS), 0)
     return this
   }
 
@@ -17,7 +21,7 @@ export default class Matrix3 {
   }
 
   clone() {
-    return new Matrix3(this.#rawData.slice(0, 16))
+    return new Matrix3(this.#rawData.slice(0, Matrix3.ELEMENTS))
   }
 
   identity() {

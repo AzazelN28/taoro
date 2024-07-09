@@ -3,6 +3,10 @@ export class Vector2 {
     return new Vector2(x, y)
   }
 
+  static from({ x, y }) {
+    return new Vector2(x, y)
+  }
+
   static isFinite({ x, y }) {
     return Number.isFinite(x) && Number.isFinite(y)
   }
@@ -30,23 +34,44 @@ export class Vector2 {
     )
   }
 
+  /**
+   * Constructor
+   *
+   * @param {number} x
+   * @param {number} y
+   */
   constructor(x = 0, y = 0) {
     this.x = x
     this.y = y
   }
 
+  /**
+   * @type {number}
+   */
   get length() {
     return Math.hypot(this.x, this.y)
   }
 
+  /**
+   * @type {number}
+   */
   get lengthSquared() {
     return this.x * this.x + this.y * this.y
   }
 
+  /**
+   * @type {number}
+   */
   get angle() {
     return Math.atan2(this.y, this.x)
   }
 
+  /**
+   *
+   * @param {number} x
+   * @param {number} y
+   * @returns {Vector2}
+   */
   set(x, y) {
     this.x = x
     this.y = y

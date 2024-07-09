@@ -4,7 +4,7 @@ Taoro is divided into multiple exchangeable parts. A Taoro Game consists of a fe
 
 The `Loop` is the main object in charge of iterate through all the `Pipeline` functions. The `Scheduler` is responsible for iterating through `Task`s (these are usually found in the `entities` folder and in the `tasks` folder).
 
-The order of execution in the pipeline is the following:
+The order of execution in the default pipeline is the following:
 
 1. Update frame counter
 2. Update the viewport, the `<canvas>` element were all the game should be rendered.
@@ -18,7 +18,7 @@ The order of execution in the pipeline is the following:
 
 Taoro implements ECS following these few rules:
 
-- **Entities**: are just an identifier that identifies entities. An id can be a `string`, a `number` or a `Symbol`.
+- **Entities**: are just an identifier that identifies entities. A valid id can be anyhing, a `string`, a `number`, a `Symbol` or even an object.
 - **Components**: are serializable objects that contains all the properties that an entity can hold and links them to a system. For example: an entity can have an `AudioEmitterComponent` so it emits spatial audio in 3D, but also can have a `SpriteComponent` that holds it's graphical representation, and also can have a `ColliderComponent` so it collides with the environment and other objects.
 - **Systems**: a system handles all _low-level_ operations. They're responsible for detecting collisions, communicating with the browser APIs and holding component resources.
 

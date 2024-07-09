@@ -1,8 +1,17 @@
 export default class Matrix4 {
+  static ELEMENTS = Matrix4.ELEMENTS;
+
+  /**
+   * @type {Array<number>}
+   */
   #rawData = null
 
-  constructor(rawData = new Array(16)) {
-    this.#rawData = rawData ?? new Array(16)
+  /**
+   *
+   * @param {Array<number>} rawData
+   */
+  constructor(rawData = new Array(Matrix4.ELEMENTS)) {
+    this.#rawData = rawData ?? new Array(Matrix4.ELEMENTS)
   }
 
   get rawData() {
@@ -13,7 +22,7 @@ export default class Matrix4 {
     if (args.length === 0)
       return this
 
-    this.#rawData.set(args.slice(0, 16), 0)
+    this.#rawData.set(args.slice(0, Matrix4.ELEMENTS), 0)
     return this
   }
 
@@ -22,7 +31,7 @@ export default class Matrix4 {
   }
 
   clone() {
-    return new Matrix4(this.#rawData.slice(0, 16))
+    return new Matrix4(this.#rawData.slice(0, Matrix4.ELEMENTS))
   }
 
   identity() {

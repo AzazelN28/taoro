@@ -1,0 +1,23 @@
+{
+  "name": "@taoro/math-sphere",
+  "version": "1.0.0",
+  "description": "Sphere",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "test": "vitest"
+  },
+  "keywords": [
+    "taoro"
+  ],
+  "author": "AzazelN28 <asakon28@gmail.com>",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/AzazelN28/taoro.git",
+    "directory": "packages/math-sphere"
+  },
+  "files": [
+    "index.js"
+  ]
+}

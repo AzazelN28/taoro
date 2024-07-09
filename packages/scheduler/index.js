@@ -2,6 +2,11 @@
  * Scheduler
  */
 export class Scheduler {
+  /**
+   * A set of all the iterators scheduled.
+   *
+   * @type {Set<Iterator>}
+   */
   #iterators = new Set()
 
   /**

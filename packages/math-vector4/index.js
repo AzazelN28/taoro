@@ -3,6 +3,18 @@ export class Vector4 {
     return new Vector4(x, y, z, w)
   }
 
+  static from({ x, y, z, w }) {
+    return new Vector4(x, y, z, w)
+  }
+
+  /**
+   * Constructor
+   *
+   * @param {number} x
+   * @param {number} y
+   * @param {number} z
+   * @param {number} w
+   */
   constructor(x = 0, y = 0, z = 0, w = 1) {
     this.x = x ?? 0
     this.y = y ?? 0
@@ -26,6 +38,15 @@ export class Vector4 {
     return this
   }
 
+  clamp(min, max) {
+    return this.set(
+      Math.max(min.x, Math.min(max.x, this.x)),
+      Math.max(min.y, Math.min(max.y, this.y)),
+      Math.max(min.z, Math.min(max.z, this.z)),
+      Math.max(min.w, Math.min(max.w, this.w)),
+    )
+  }
+
   reset() {
     return this.set(0, 0, 0, 1)
   }
@@ -39,39 +60,19 @@ export class Vector4 {
   }
 
   add({ x, y, z, w }) {
-    return this.set(
-      this.x + x,
-      this.y + y,
-      this.z + z,
-      this.w + w
-    )
+    return this.set(this.x + x, this.y + y, this.z + z, this.w + w)
   }
 
   subtract({ x, y, z, w }) {
-    return this.set(
-      this.x - x,
-      this.y - y,
-      this.z - z,
-      this.w - w
-    )
+    return this.set(this.x - x, this.y - y, this.z - z, this.w - w)
   }
 
   multiply({ x, y, z, w }) {
-    return this.set(
-      this.x * x,
-      this.y * y,
-      this.z * z,
-      this.w * w
-    )
+    return this.set(this.x * x, this.y * y, this.z * z, this.w * w)
   }
 
   divide({ x, y, z, w }) {
-    return this.set(
-      this.x / x,
-      this.y / y,
-      this.z / z,
-      this.w / w
-    )
+    return this.set(this.x / x, this.y / y, this.z / z, this.w / w)
   }
 
   scale(scalar) {

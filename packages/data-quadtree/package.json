@@ -1,0 +1,26 @@
+{
+  "name": "@taoro/data-quadtree",
+  "version": "1.0.0",
+  "description": "QuadTree",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "test": "vitest"
+  },
+  "keywords": [
+    "taoro"
+  ],
+  "author": "AzazelN28 <asakon28@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "@taoro/math-rect": "workspace:^"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/AzazelN28/taoro.git",
+    "directory": "packages/data-quadtree"
+  },
+  "files": [
+    "index.js"
+  ]
+}

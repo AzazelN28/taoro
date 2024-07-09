@@ -5,11 +5,39 @@ import ResourceLoader from '@taoro/resource-loader'
  * loaded, failed and pending.
  */
 export class Resources {
+  /**
+   * Promises associated with the resources.
+   *
+   * @type {Map<string, Promise>}
+   */
   #promises = new Map()
+
+  /**
+   * Map of resources.
+   *
+   * @type {Map<string, *>}
+   */
   #resources = new Map()
 
+  /**
+   * Amount of total (loaded and failed) resources allocated.
+   *
+   * @type {number}
+   */
   #total = 0
+
+  /**
+   * Amount of successfully loaded resources.
+   *
+   * @type {number}
+   */
   #loaded = 0
+
+  /**
+   * Amount of failed resources.
+   *
+   * @type {number}
+   */
   #failed = 0
 
   /**
@@ -70,15 +98,34 @@ export class Resources {
     return this.#resources.has(url)
   }
 
+  /**
+   * Sets a new resource by its URL.
+   *
+   * @param {string} url
+   * @param {*} resource
+   * @returns {Resources}
+   */
   set(url, resource) {
     this.#resources.set(url, resource)
     return this
   }
 
+  /**
+   * Gets a resource by its URL.
+   *
+   * @param {string} url
+   * @returns {*}
+   */
   get(url) {
     return this.#resources.get(url)
   }
 
+  /**
+   * Deletes a resource by its URL.
+   *
+   * @param {string} url
+   * @returns {Resources}
+   */
   delete(url) {
     const resource = this.#resources.has(url)
     if (resource instanceof ImageBitmap) {
@@ -89,6 +136,11 @@ export class Resources {
     return this
   }
 
+  /**
+   * Clears everything.
+   *
+   * @returns {Resources}
+   */
   clear() {
     for (const [url, resource] of this.#resources) {
       if (resource instanceof ImageBitmap) {
@@ -100,6 +152,12 @@ export class Resources {
     return this
   }
 
+  /**
+   * Loads a resource from a URL.
+   *
+   * @param {string} url
+   * @returns {Promise<*|Error>}
+   */
   async load(url) {
     ++this.#total
     const resourceURL = new URL(url, this.baseURL)

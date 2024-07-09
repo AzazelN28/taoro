@@ -1,3 +1,8 @@
+/**
+ * The random function used as default for every function.
+ *
+ * @type {Function}
+ */
 export const MATH_RANDOM_DEFAULT_FUNCTION = Math.random
 
 /**

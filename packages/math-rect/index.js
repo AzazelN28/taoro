@@ -214,10 +214,12 @@ export class Rect {
     return this
   }
 
+  contains(x, y) {
+    return x >= this.left && x <= this.right && y >= this.top && y <= this.bottom
+  }
+
   containsPoint({ x, y }) {
-    return (
-      x >= this.left && x <= this.right && y >= this.top && y <= this.bottom
-    )
+    return this.contains(x, y)
   }
 
   containsRect({ x, y, width, height }) {
