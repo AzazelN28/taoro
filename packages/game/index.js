@@ -12,6 +12,8 @@ import { FrameCounter } from '@taoro/frame-counter'
 /**
  * Game
  *
+ * Hoola
+ *
  */
 export class Game {
   #loop = null

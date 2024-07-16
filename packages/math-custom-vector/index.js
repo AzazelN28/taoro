@@ -5,14 +5,19 @@
  * @param {*} defaultValues
  * @returns {CustomVector}
  */
-export default function defineVector(name, defaultValues) {
+export function defineVector(name, defaultValues) {
   const $names = Object.keys(defaultValues)
   const $values = Object.values(defaultValues)
   const $symbol = Symbol(name)
 
   const CustomVector = class {
-    [$symbol];
+    [$symbol]
 
+    /**
+     *
+     * @param {*} instance
+     * @returns {boolean}
+     */
     static [Symbol.hasInstance](instance) {
       return $symbol in instance
     }
@@ -176,7 +181,7 @@ export default function defineVector(name, defaultValues) {
       return true
     }
 
-    equals(vector) {
+    equalTo(vector) {
       if (!($symbol in vector)) {
         throw new Error(`Expected a ${name} instance.`)
       }
@@ -228,3 +233,5 @@ export default function defineVector(name, defaultValues) {
 
   return CustomVector
 }
+
+export default defineVector

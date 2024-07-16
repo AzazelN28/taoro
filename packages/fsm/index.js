@@ -2,17 +2,34 @@
  * Finite State Machine
  */
 export class FiniteStateMachine {
+  /**
+   * Current state
+   *
+   * @type {string|number}
+   */
   #currentState = null
+
+  /**
+   * Initial state
+   *
+   * @type {string|number}
+   */
   #initialState = null
+
+  /**
+   * Allowed transitions
+   *
+   * @type {Object.<string|number, Array.<string|number>>}
+   */
   #transitions = null
 
   /**
    * Creates a new finite state machine.
    *
-   * @param {string} initialState
-   * @param {Map<string, Array<string>>} transitions
+   * @param {string|number} initialState
+   * @param {Object.<string|number, Array.<string|number>>} transitions
    */
-  constructor(initialState, transitions = new Map()) {
+  constructor(initialState, transitions = new Object()) {
     this.#initialState = initialState
     this.#currentState = initialState
     this.#transitions = transitions
@@ -22,7 +39,7 @@ export class FiniteStateMachine {
    * The initial state.
    *
    * @readonly
-   * @type {string}
+   * @type {string|number}
    */
   get initialState() {
     return this.#initialState
@@ -32,7 +49,7 @@ export class FiniteStateMachine {
    * The current state.
    *
    * @readonly
-   * @type {string}
+   * @type {string|number}
    */
   get currentState() {
     return this.#currentState
@@ -41,7 +58,7 @@ export class FiniteStateMachine {
   /**
    * Sets the current state.
    *
-   * @param {string} newState
+   * @param {string|number} newState
    * @throws {Error} Throws an error if the state transition is invalid.
    */
   set currentState(newState) {
@@ -53,14 +70,14 @@ export class FiniteStateMachine {
   /**
    * Transitions to a new state. Returns `true` if the state machine can transition to the new state, `false` otherwise.
    *
-   * @param {string} newState
+   * @param {string|number} newState
    * @returns {boolean}
    */
   transitionTo(newState) {
-    if (!this.#transitions.has(this.#currentState)) {
+    if (!(this.#currentState in this.#transitions)) {
       return false
     }
-    const availableTransitions = this.#transitions.get(this.#currentState)
+    const availableTransitions = this.#transitions[this.#currentState]
     if (!availableTransitions.includes(newState)) {
       return false
     }
@@ -71,7 +88,7 @@ export class FiniteStateMachine {
   /**
    * Returns the current state.
    *
-   * @returns {string}
+   * @returns {string|number}
    */
   valueOf() {
     return this.#currentState
@@ -80,7 +97,7 @@ export class FiniteStateMachine {
   /**
    * Returns the current state.
    *
-   * @returns {string}
+   * @returns {string|number}
    */
   toString() {
     return this.#currentState
@@ -89,7 +106,7 @@ export class FiniteStateMachine {
   /**
    * Returns the current state.
    *
-   * @returns {string}
+   * @returns {string|number}
    */
   toJSON() {
     return this.#currentState
@@ -98,7 +115,7 @@ export class FiniteStateMachine {
   /**
    * Returns the current state.
    *
-   * @returns {string}
+   * @returns {string|number}
    */
   [Symbol.toPrimitive]() {
     return this.#currentState

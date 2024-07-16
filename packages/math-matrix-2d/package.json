@@ -18,6 +18,8 @@
     "directory": "packages/math-matrix-2d"
   },
   "files": [
-    "index.js"
+    "index.js",
+    "mat2d.js",
+    "common.js"
   ]
 }

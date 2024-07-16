@@ -121,6 +121,8 @@ export class Pool {
   }
 
   /**
+   * Returns the size of the pool.
+   *
    * @type {number}
    */
   get size() {
@@ -128,6 +130,9 @@ export class Pool {
   }
 
   /**
+   * Returns the amount of available objects in the
+   * pool.
+   *
    * @type {number}
    */
   get available() {
@@ -135,6 +140,8 @@ export class Pool {
   }
 
   /**
+   * Returns the amount of allocated objects.
+   *
    * @type {number}
    */
   get count() {

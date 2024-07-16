@@ -1,7 +1,7 @@
 import { createAudioElement, createVideoElement, createImageElement } from "@taoro/media"
 
 /**
- * Returns an <style> element from a response.
+ * Returns an <style> element from a Response.
  *
  * @param {Response} response
  * @returns {Promise<HTMLStyleElement>}
@@ -26,6 +26,7 @@ export async function getAsURL(response) {
 }
 
 /**
+ * Returns a FontFace from a Response.
  *
  * @param {Response} response
  * @param {FontFaceDescription} [description]
@@ -61,6 +62,7 @@ export async function getAsFontFace(response, { family, descriptors } = {}) {
 }
 
 /**
+ * Returns a Document from a Response.
  *
  * @param {Response} response
  * @param {DocumentDescription} options
@@ -79,7 +81,7 @@ export async function getAsDocument(response, { contentType } = {}) {
 }
 
 /**
- * Returns an <img> element from a response.
+ * Returns an <img> element from a Response.
  *
  * @param {Response} response
  * @param {CreateImageOptions} options
@@ -92,7 +94,7 @@ export async function getAsImageElement(response, options) {
 }
 
 /**
- * Returns an ImageBitmap from a response.
+ * Returns an ImageBitmap from a Response.
  *
  * @param {Response} response
  * @param {CreateImageBitmapOptions} options
@@ -105,10 +107,11 @@ export async function getAsImageBitmap(response, options) {
 }
 
 /**
+ * Returns an Image from a Response.
  *
- * @param {*} response
+ * @param {Response} response
  * @param {*} options
- * @returns
+ * @returns {ImageBitmap|Image}
  */
 export async function getAsImage(response, options) {
   const url = new URL(response.url)
@@ -118,6 +121,13 @@ export async function getAsImage(response, options) {
   return getAsImageElement(response, options)
 }
 
+/**
+ * Returns an AudioBuffer from a Response.
+ *
+ * @param {Response} response
+ * @param {*} param1
+ * @returns {AudioBuffer}
+ */
 export async function getAsAudioBuffer(response, { audioContext = new AudioContext() } = {}) {
   const arrayBuffer = await response.arrayBuffer()
   const audioBuffer = await audioContext.decodeAudioData(arrayBuffer)
@@ -125,12 +135,26 @@ export async function getAsAudioBuffer(response, { audioContext = new AudioConte
   return audioBuffer
 }
 
+/**
+ * Returns an HTMLAudioElement from a Response.
+ *
+ * @param {Response} response
+ * @param {*} options
+ * @returns {HTMLAudioElement}
+ */
 export async function getAsAudioElement(response, options) {
   const blob = await response.blob()
   const url = URL.createObjectURL(blob)
   return createAudioElement(url, options)
 }
 
+/**
+ * Returns an HTMLAudioElement or AudioBuffer from Response.
+ *
+ * @param {Response} response
+ * @param {*} options
+ * @returns {AudioBuffer|HTMLAudioElement}
+ */
 export async function getAsAudio(response, options) {
   const url = new URL(response.url)
   if (url.searchParams.get('taoro:as') === 'audiobuffer') {
@@ -139,16 +163,36 @@ export async function getAsAudio(response, options) {
   return getAsAudioElement(response, options)
 }
 
+/**
+ * Returns an HTMLVideoElement from a Response.
+ *
+ * @param {Response} response
+ * @param {*} options
+ * @returns {HTMLVideoElement}
+ */
 export async function getAsVideoElement(response, options) {
   const blob = await response.blob()
   const url = URL.createObjectURL(blob)
   return createVideoElement(url, options)
 }
 
+/**
+ * Returns an HTMLVideoElement from a Response.
+ *
+ * @param {Response} response
+ * @param {*} options
+ * @returns {HTMLVideoElement}
+ */
 export async function getAsVideo(response, options) {
   return getAsVideoElement(response, options)
 }
 
+/**
+ * Returns the response depending on multiple response data.
+ *
+ * @param {Response} response
+ * @returns {Object|Array|FontFace|string|Document|AudioBuffer|HTMLStyleElement|HTMLAudioElement|HTMLVideoElement|Image|ImageBitmap|Blob|ArrayBuffer}
+ */
 export async function getResourceFromResponse(response) {
   const url = new URL(response.url)
   const asType = url.searchParams.get('taoro:as')
@@ -189,6 +233,12 @@ export async function getResourceFromResponse(response) {
   }
 }
 
+/**
+ * Loads a resource.
+ *
+ * @param  {...any} init
+ * @returns {Promise<Object|Array|FontFace|string|Document|AudioBuffer|HTMLStyleElement|HTMLAudioElement|HTMLVideoElement|Image|ImageBitmap|Blob|ArrayBuffer>}
+ */
 export async function load(...init) {
   const response = await fetch(...init)
   if (!response.ok) {

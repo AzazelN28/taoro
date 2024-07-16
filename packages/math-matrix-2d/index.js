@@ -1,10 +1,14 @@
-export class Matrix {
+export class Matrix2D {
   static ELEMENTS = 6
 
   #rawData = [1, 0, 0, 1, 0, 0]
 
   constructor(a = 1, b = 0, c = 0, d = 1, e = 0, f = 0) {
     this.#rawData = [a, b, c, d, e, f]
+  }
+
+  get rawData() {
+    return this.#rawData
   }
 
   get isIdentity() {
@@ -79,7 +83,7 @@ export class Matrix {
   }
 
   identity() {
-    return this.set(1, 0, 0, 1, 0, 0)
+    return this.reset()
   }
 
   copy({ a, b, c, d, e, f }) {
@@ -206,12 +210,12 @@ export class Matrix {
   }
 
   toFixed(fractionDigits = 0) {
-    return `Matrix(${this.#rawData.map((v) => v.toFixed(fractionDigits)).join(', ')})`
+    return `Matrix2D(${this.#rawData.map((v) => v.toFixed(fractionDigits)).join(', ')})`
   }
 
   toString() {
-    return `Matrix(${this.#rawData.join(', ')})`
+    return `Matrix2D(${this.#rawData.join(', ')})`
   }
 }
 
-export default Matrix
+export default Matrix2D

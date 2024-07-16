@@ -1,6 +1,6 @@
 {
   "name": "@taoro/component-transform-3d",
-  "version": "1.0.0",
+  "version": "1.0.2",
   "description": "",
   "main": "index.js",
   "type": "module",
@@ -14,6 +14,7 @@
   "license": "MIT",
   "dependencies": {
     "@taoro/component": "workspace:^",
+    "@taoro/math-matrix4": "workspace:^",
     "@taoro/math-vector3": "workspace:^"
   },
   "repository": {

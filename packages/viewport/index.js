@@ -1,7 +1,7 @@
 import { Runnable } from '@taoro/runnable'
 import { addEventListeners, removeEventListeners } from '@taoro/events'
 import { Rect } from '@taoro/math-rect'
-import { resizeAuto, resizeTo } from '@taoro/canvas'
+import { resizeBy, resizeTo } from '@taoro/canvas'
 
 /**
  * The ViewportFullscreen class is responsible
@@ -98,13 +98,44 @@ export function isResizeMode(value) {
  * and how it is resized when dimensions of the container element changes.
  */
 export class Viewport {
+  /**
+   * @type {HTMLCanvasElement}
+   */
   #canvas = null
+
+  /**
+   *
+   */
   #mode = ViewportResizeMode.AUTO
+
+  /**
+   * @type {number}
+   */
   #width = 320
+
+  /**
+   * @type {number}
+   */
   #height = 200
+
+  /**
+   * @type {number}
+   */
   #scale = 1.0
+
+  /**
+   * @type {Rect}
+   */
   #rect = new Rect()
+
+  /**
+   * @type {ViewportFullscreen}
+   */
   #fullscreen = null
+
+  /**
+   * @type {Runnable}
+   */
   #runnable = new Runnable()
 
   /**
@@ -117,7 +148,7 @@ export class Viewport {
     this.#canvas = canvas
     const mode = options?.mode ?? ViewportResizeMode.AUTO
     if (!isResizeMode(mode)) {
-      throw new Error(`Viewport: Invalid resize mode "${mode}"`)
+      throw new Error(`Invalid resize mode "${mode}"`)
     }
     this.#mode = mode
     this.#width = options?.width ?? 320
@@ -141,7 +172,7 @@ export class Viewport {
    */
   set mode(mode) {
     if (!isResizeMode(mode)) {
-      throw new Error('Viewport: Invalid resize mode')
+      throw new Error('Invalid resize mode')
     }
     this.#mode = mode
   }
@@ -155,7 +186,7 @@ export class Viewport {
    */
   set scale(value) {
     if (!Number.isFinite(value) || value <= 0) {
-      throw new Error('Viewport: Invalid resize scale')
+      throw new Error('Invalid resize scale')
     }
     this.#scale = value
   }
@@ -197,7 +228,7 @@ export class Viewport {
    */
   set width(value) {
     if (!Number.isFinite(value) || value <= 0) {
-      throw new Error('Viewport: Invalid resize width')
+      throw new Error('Invalid resize width')
     }
     this.#width = Math.floor(value)
   }
@@ -211,7 +242,7 @@ export class Viewport {
    */
   set height(value) {
     if (!Number.isFinite(value) || value <= 0) {
-      throw new Error('Viewport: Invalid resize height')
+      throw new Error('Invalid resize height')
     }
     this.#height = Math.floor(value)
   }
@@ -305,11 +336,11 @@ export class Viewport {
   update() {
     let resized = false
     if (this.#mode === ViewportResizeMode.AUTO) {
-      resized = resizeAuto(this.#canvas, this.#scale)
+      resized = resizeBy(this.#canvas, this.#scale)
     } else if (this.#mode === ViewportResizeMode.NONE) {
       resized = resizeTo(this.#canvas, this.#width, this.#height)
     } else {
-      throw new Error('Viewport: Invalid resize mode')
+      throw new Error('Invalid resize mode')
     }
 
     if (resized) {

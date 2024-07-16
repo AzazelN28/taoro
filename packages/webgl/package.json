@@ -1,0 +1,28 @@
+{
+  "name": "@taoro/webgl",
+  "version": "1.0.1",
+  "description": "WebGL Utilities",
+  "main": "index.js",
+  "scripts": {
+    "test": "vitest"
+  },
+  "keywords": [
+    "taoro"
+  ],
+  "author": "AzazelN28 <asakon28@gmail.com>",
+  "license": "MIT",
+  "type": "module",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/AzazelN28/taoro.git",
+    "directory": "packages/webgl"
+  },
+  "files": [
+    "index.js",
+    "buffer.js",
+    "program.js",
+    "shader.js",
+    "vao.js"
+  ],
+  "dependencies": {}
+}

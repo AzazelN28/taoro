@@ -4,9 +4,6 @@
   "description": "PubSub",
   "main": "index.js",
   "type": "module",
-  "scripts": {
-    "test": "vitest"
-  },
   "keywords": [
     "taoro"
   ],
@@ -19,8 +16,5 @@
   },
   "files": [
     "index.js"
-  ],
-  "devDependencies": {
-    "vitest": "^1.1.3"
-  }
+  ]
 }

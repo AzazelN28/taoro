@@ -1,0 +1,31 @@
+{
+  "name": "@taoro/renderer-3d",
+  "version": "1.0.0",
+  "description": "Renderer 3D using WebGL API",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "test": "vitest"
+  },
+  "keywords": [
+    "taoro"
+  ],
+  "author": "AzazelN28 <asakon28@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "@taoro/component": "workspace:^",
+    "@taoro/component-transform-3d": "workspace:^",
+    "@taoro/math-vector3": "workspace:^",
+    "@taoro/math-vector4": "workspace:^",
+    "@taoro/math-matrix3": "workspace:^",
+    "@taoro/math-matrix4": "workspace:^"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/AzazelN28/taoro.git",
+    "directory": "packages/renderer-2d"
+  },
+  "files": [
+    "index.js"
+  ]
+}

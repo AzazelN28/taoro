@@ -84,7 +84,7 @@ export function resizeTo(canvas, width, height) {
  * @param {number} [multiplier=1.0]
  * @returns {boolean}
  */
-export function resizeAuto(canvas, multiplier = 1.0) {
+export function resizeBy(canvas, multiplier = 1.0) {
   return resizeTo(
     canvas,
     Math.floor(canvas.clientWidth * multiplier),
@@ -97,5 +97,5 @@ export default {
   createCanvasElement,
   createOffscreenCanvas,
   resizeTo,
-  resizeAuto,
+  resizeBy,
 }

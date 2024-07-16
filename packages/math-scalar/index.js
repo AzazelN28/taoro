@@ -9,11 +9,11 @@ export class Scalar {
     return value >= min && value <= max
   }
 
-  static areEqual(a, b) {
+  static equals(a, b) {
     return a === b
   }
 
-  static areAlmostEqual(a, b, epsilon = EPSILON) {
+  static almostEquals(a, b, epsilon = EPSILON) {
     return Math.abs(a - b) < epsilon
   }
 
@@ -25,11 +25,11 @@ export class Scalar {
     return a < b
   }
 
-  static greaterOrEqualTo(a, b) {
+  static greaterThanOrEqual(a, b) {
     return a >= b
   }
 
-  static lessOrEqualTo(a, b) {
+  static lessThanOrEqual(a, b) {
     return a <= b
   }
 
@@ -82,27 +82,27 @@ export class Scalar {
     return this
   }
 
-  equalTo(value) {
-    return this.value === value
-  }
-
-  greaterThan(value) {
+  isGreaterThan(value) {
     return this.value > value
   }
 
-  lessThan(value) {
+  isLessThan(value) {
     return this.value < value
   }
 
-  greaterOrEqualTo(value) {
+  isGreaterThanOrEqual(value) {
     return this.value >= value
   }
 
-  lessOrEqualTo(value) {
+  isLessThanOrEqual(value) {
     return this.value <= value
   }
 
-  almostEqualTo(value, epsilon = EPISLON) {
+  isEqualTo(value) {
+    return this.value === value
+  }
+
+  isAlmostEqualTo(value, epsilon = EPISLON) {
     return Math.abs(this.value - value) < epsilon
   }
 

@@ -100,9 +100,22 @@ export class PathComponent extends ZIndexComponent {
 }
 
 export class Renderer {
+  /**
+   * @type {HTMLCanvasElement|OffscreenCanvas}
+   */
   #canvas = null
+
+  /**
+   * @type {WebGLRenderingContext|WebGL2RenderingContext}
+   */
   #context = null
 
+  /**
+   * Constructor
+   *
+   * @param {HTMLCanvasElement|OffscreenCanvas} canvas
+   * @param {*} options
+   */
   constructor(canvas, options) {
     this.#canvas = canvas
     this.#context = canvas.getContext('2d')

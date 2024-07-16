@@ -18,6 +18,8 @@
     "directory": "packages/math-matrix3"
   },
   "files": [
-    "index.js"
+    "index.js",
+    "mat3.js",
+    "common.js"
   ]
 }

@@ -43,15 +43,36 @@ class Subscriber {
   }
 }
 
+/**
+ * PubSub
+ */
 export class PubSub {
+  /**
+   * List of subscribers to this PubSub
+   *
+   * @type {Array<Subscriber>}
+   */
   #subscribers = []
 
+  /**
+   * Subscribes to one or to multiple topics.
+   *
+   * @param {Function} callback
+   * @param  {...any} topics
+   * @returns {Subscriber}
+   */
   subscribe(callback, ...topics) {
     const subscriber = new Subscriber(callback, topics)
     this.#subscribers.push(subscriber)
     return subscriber
   }
 
+  /**
+   * Unsubscribes the subscriber.
+   *
+   * @param {Subscriber} subscriber
+   * @returns {boolean}
+   */
   unsubscribe(subscriber) {
     const index = this.#subscribers.indexOf(subscriber)
     if (index === -1) {
@@ -61,6 +82,13 @@ export class PubSub {
     return true
   }
 
+  /**
+   * Publish some info into some topics.
+   *
+   * @param {*} payload
+   * @param {...any} topics
+   * @returns {PubSub}
+   */
   publish(payload, ...topics) {
     for (const subscriber of this.#subscribers) {
       if (!subscriber.matches(topics)) {

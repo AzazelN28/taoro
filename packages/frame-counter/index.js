@@ -2,8 +2,25 @@
  * Frame counter.
  */
 export class FrameCounter {
+  /**
+   * Start time.
+   *
+   * @type {number}
+   */
   #startTime = 0
+
+  /**
+   * Number of frames counted since start time.
+   *
+   * @type {number}
+   */
   #count = 0
+
+  /**
+   * Amount of frames since last second.
+   *
+   * @type {number}
+   */
   #framesPerSecond = 0
 
   /**
@@ -30,11 +47,11 @@ export class FrameCounter {
    * @param {number} currentTime
    */
   update(currentTime) {
-    ++this.#count
     if (currentTime - this.#startTime >= 1000) {
       this.#startTime = currentTime
       this.#framesPerSecond = this.#count
       this.#count = 0
     }
+    ++this.#count
   }
 }

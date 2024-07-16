@@ -19,5 +19,9 @@
   },
   "files": [
     "index.js"
-  ]
+  ],
+  "dependencies": {
+    "@taoro/math-ray": "workspace:^",
+    "@taoro/math-vector3": "workspace:^"
+  }
 }

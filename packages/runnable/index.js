@@ -2,6 +2,11 @@
  * A runnable is an object that can be started and stopped.
  */
 export class Runnable {
+  /**
+   * Indicates that the runnable is running.
+   *
+   * @type {boolean}
+   */
   #isRunning = false
 
   /**

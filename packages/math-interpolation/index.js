@@ -37,8 +37,19 @@ export function cubic(x, a, b, c, d) {
   return linear(x, quadratic(x, a, b, c), quadratic(x, b, c, d))
 }
 
+/**
+ * Smoothstep function
+ *
+ * @see https://en.wikipedia.org/wiki/Smoothstep
+ * @returns {number}
+ */
+export function smoothstep(x) {
+  return x * x * (3.0 - 2.0 * x);
+}
+
 export default {
   linear,
   quadratic,
-  cubic
+  cubic,
+  smoothstep
 }

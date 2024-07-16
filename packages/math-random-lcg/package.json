@@ -1,0 +1,23 @@
+{
+  "name": "@taoro/math-random-lcg",
+  "version": "1.0.2",
+  "description": "Random LCG",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "test": "vitest"
+  },
+  "keywords": [
+    "taoro"
+  ],
+  "author": "AzazelN28 <asakon28@gmail.com>",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/AzazelN28/taoro.git",
+    "directory": "packages/math-random-lcg"
+  },
+  "files": [
+    "index.js"
+  ]
+}

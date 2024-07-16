@@ -8,14 +8,14 @@ export class Resources {
   /**
    * Promises associated with the resources.
    *
-   * @type {Map<string, Promise>}
+   * @type {Map.<string, Promise>}
    */
   #promises = new Map()
 
   /**
    * Map of resources.
    *
-   * @type {Map<string, *>}
+   * @type {Map.<string, *>}
    */
   #resources = new Map()
 
@@ -163,7 +163,8 @@ export class Resources {
     const resourceURL = new URL(url, this.baseURL)
     let promise = null
     try {
-      promise = ResourceLoader.load(resourceURL)
+      promise = ResourceLoader
+        .load(resourceURL)
         .then((payload) => {
           ++this.#loaded
           this.#resources.set(url, payload)

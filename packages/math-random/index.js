@@ -1,3 +1,63 @@
+export class Random {
+  #provider = null
+
+  constructor(provider) {
+    this.#provider = provider
+  }
+
+  angle() {
+    return this.#provider.next() * Math.PI * 2 - Math.PI
+  }
+
+  between(min, max) {
+    return min + this.#provider.next() * (max - min)
+  }
+
+  intBetween(min, max) {
+    return min + Math.floor(this.#provider.next() * (max - min))
+  }
+
+  roll(sides) {
+    return 1 + Math.floor(this.#provider.next() * sides)
+  }
+
+  value() {
+    return this.#provider.next()
+  }
+
+  index(list) {
+    return Math.floor(this.#provider.next() * list.length)
+  }
+
+  pickOne(list) {
+    return list[this.index(list)]
+  }
+
+  pick(list) {
+    const result = []
+    for (let i = 0; i < count; i++) {
+      result.push(this.pickOne(list))
+    }
+    return result
+  }
+
+  takeOne(list) {
+    const [removed] = list.slice(this.index(list), 1)
+    return removed
+  }
+
+  take(list, count){
+    const result = []
+    for (let i = 0; i < count; i++) {
+      const value = this.takeOne(list)
+      if (value !== undefined) {
+        result.push(value)
+      }
+    }
+    return result
+  }
+}
+
 /**
  * The random function used as default for every function.
  *
@@ -109,6 +169,7 @@ export function take(list, count, random = MATH_RANDOM_DEFAULT_FUNCTION) {
 }
 
 export default {
+  Random,
   angle,
   between,
   roll,

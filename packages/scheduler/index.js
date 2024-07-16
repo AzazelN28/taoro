@@ -57,8 +57,8 @@ export class Scheduler {
    * @returns {Scheduler}
    */
   add(iterator) {
-    if (!(Symbol.iterator in iterator)
-     && !(Symbol.asyncIterator in iterator)) {
+    if (!(iterator[Symbol.iterator])
+     && !(iterator[Symbol.asyncIterator])) {
       throw new TypeError('Task is not iterable')
     }
     this.#iterators.add(iterator)

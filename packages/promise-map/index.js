@@ -12,14 +12,14 @@
  */
 export class PromiseMap {
   /**
-   * Map of promises
+   * Map of promises.
    *
    * @type {Map<*, Promise>}
    */
   #promises = new Map()
 
   /**
-   * Map of executors
+   * Map of executors.
    *
    * @type {Map<*, PromiseExecutor>}
    */

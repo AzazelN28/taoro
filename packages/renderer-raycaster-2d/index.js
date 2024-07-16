@@ -124,7 +124,10 @@ export const RaySide = {
 }
 
 /**
- * Ray
+ * Ray 2D
+ *
+ * This is an internal class of the raycaster renderer used to cast
+ * rays from the view.
  */
 export class Ray {
   constructor() {
