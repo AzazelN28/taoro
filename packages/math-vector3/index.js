@@ -324,7 +324,7 @@ export class Vector3 {
   /**
    * Performs the cross product of this vector by another vector.
    *
-   * @param {Vector3} param0
+   * @param {Vector3} vector
    * @returns {Vector3}
    */
   cross({ x, y, z }) {
@@ -333,6 +333,16 @@ export class Vector3 {
       this.z * x - this.x * z,
       this.x * y - this.y * x
     )
+  }
+
+  /**
+   * Returns the distance between this vector and another vector.
+   *
+   * @param {Vector3} vector
+   * @returns {number}
+   */
+  distanceTo({ x, y, z }) {
+    return Math.hypot(this.x - x, this.y - y, this.z - z)
   }
 
   /**
