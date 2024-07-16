@@ -245,6 +245,10 @@ export class Matrix4 {
     )
   }
 
+  copyTranslation({ m30, m31, m32 }) {
+    return this.#rawData.set([m30, m31, m32], 12)
+  }
+
   clone() {
     const {
       m00, m01, m02, m03,
@@ -275,6 +279,10 @@ export class Matrix4 {
     return Matrix4.multiply(
       this, this, other
     )
+  }
+
+  translate({ x, y, z }) {
+    return this.setRow(3, x, y, z, this.#rawData[15])
   }
 }
 

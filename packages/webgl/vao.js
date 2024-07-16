@@ -37,9 +37,9 @@ export function createVertexArray(gl, vertexArrayBufferDescriptor) {
     )
   }
   if (vertexArrayBufferDescriptor?.indexBuffer) {
-    gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, indexBuffer)
+    gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, vertexArrayBufferDescriptor.indexBuffer)
   }
-  gl.bindVertexArray(null);
+  gl.bindVertexArray(null)
   return vao
 }
 
