@@ -29,11 +29,35 @@ export class Random {
     return Math.floor(this.#provider.next() * list.length)
   }
 
+  indexWeighted(list, weights) {
+    if (list.length !== weights.length) {
+      throw new Error('Items and weights must be of the same size')
+    }
+    if (!list.length) {
+      throw new Error('Items must not be empty')
+    }
+    const cumulativeWeights = []
+    for (let i = 0; i < weights.length; i += 1) {
+      cumulativeWeights[i] = weights[i] + (cumulativeWeights[i - 1] || 0)
+    }
+    const maxCumulativeWeight = cumulativeWeights[cumulativeWeights.length - 1]
+    const randomNumber = maxCumulativeWeight * this.#provider.next()
+    for (let index = 0; index < list.length; index += 1) {
+      if (cumulativeWeights[index] >= randomNumber) {
+        return index
+      }
+    }
+  }
+
   pickOne(list) {
     return list[this.index(list)]
   }
 
-  pick(list) {
+  pickOneWeighted(list, weights) {
+    return list[this.indexWeighted(list, weights)]
+  }
+
+  pick(list, count) {
     const result = []
     for (let i = 0; i < count; i++) {
       result.push(this.pickOne(list))
@@ -41,8 +65,23 @@ export class Random {
     return result
   }
 
+  pickWeighted(list, weights, count) {
+    const result = []
+    for (let i = 0; i < count; i++) {
+      result.push(this.pickOneWeighted(list, weights))
+    }
+    return result
+  }
+
   takeOne(list) {
-    const [removed] = list.slice(this.index(list), 1)
+    const [removed] = list.splice(this.index(list), 1)
+    return removed
+  }
+
+  takeOneWeighted(list, weights) {
+    const index = this.indexWeighted(list, weights);
+    const [removed] = list.splice(index, 1)
+    weights.splice(index, 1)
     return removed
   }
 
@@ -50,6 +89,17 @@ export class Random {
     const result = []
     for (let i = 0; i < count; i++) {
       const value = this.takeOne(list)
+      if (value !== undefined) {
+        result.push(value)
+      }
+    }
+    return result
+  }
+
+  takeWeighted(list, weights, count) {
+    const result = []
+    for (let i = 0; i < count; i++) {
+      const value = this.takeOneWeighted(list, weights)
       if (value !== undefined) {
         result.push(value)
       }
