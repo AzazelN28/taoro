@@ -71,6 +71,13 @@ export function getProgramAttributes(gl, program) {
   return attributes
 }
 
+/**
+ * Returns
+ *
+ * @param {WebGLRenderingContext|WebGL2RenderingContext} gl
+ * @param {WebGLProgram} program
+ * @returns {{attributes, uniforms}}
+ */
 export function getProgramAttributesAndUniforms(gl, program) {
   return {
     attributes: getProgramAttributes(gl, program),
@@ -81,4 +88,7 @@ export function getProgramAttributesAndUniforms(gl, program) {
 export default {
   createProgram,
   createProgramFromSources,
+  getProgramAttributes,
+  getProgramUniforms,
+  getProgramAttributesAndUniforms,
 }
