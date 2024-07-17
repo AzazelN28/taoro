@@ -110,6 +110,34 @@ export function index(list, random = MATH_RANDOM_DEFAULT_FUNCTION) {
 }
 
 /**
+ * Return a random index from the list with weights.
+ *
+ * @param {Array} list
+ * @param {Array} weights
+ * @param {Function} [random=MATH_RANDOM_DEFAULT_FUNCTION]
+ * @returns {number}
+ */
+export function indexWeighted(list, weights, random = MATH_RANDOM_DEFAULT_FUNCTION) {
+  if (list.length !== weights.length) {
+    throw new Error('Items and weights must be of the same size')
+  }
+  if (!list.length) {
+    throw new Error('Items must not be empty')
+  }
+  const cumulativeWeights = []
+  for (let i = 0; i < weights.length; i += 1) {
+    cumulativeWeights[i] = weights[i] + (cumulativeWeights[i - 1] || 0)
+  }
+  const maxCumulativeWeight = cumulativeWeights[cumulativeWeights.length - 1]
+  const randomNumber = maxCumulativeWeight * random()
+  for (let index = 0; index < list.length; index += 1) {
+    if (cumulativeWeights[index] >= randomNumber) {
+      return index
+    }
+  }
+}
+
+/**
  * Returns a random element from the list.
  *
  * @param {Array} list
@@ -118,6 +146,18 @@ export function index(list, random = MATH_RANDOM_DEFAULT_FUNCTION) {
  */
 export function pickOne(list, random = MATH_RANDOM_DEFAULT_FUNCTION) {
   return list[index(list, random)]
+}
+
+/**
+ * Returns a random element from the list with weights.
+ *
+ * @param {Array} list
+ * @param {Array} weights
+ * @param {Function} [random=MATH_RANDOM_DEFAULT_FUNCTION]
+ * @returns {*}
+ */
+export function pickOneWeighted(list, weights, random = MATH_RANDOM_DEFAULT_FUNCTION) {
+  return list[indexWeighted(list, weights, random)]
 }
 
 /**
@@ -137,6 +177,23 @@ export function pick(list, count, random = MATH_RANDOM_DEFAULT_FUNCTION) {
 }
 
 /**
+ * Returns the specified number of random elements from the list with weights.
+ *
+ * @param {Array} list
+ * @param {Array} weights
+ * @param {number} count
+ * @param {Function} [random=MATH_RANDOM_DEFAULT_FUNCTION]
+ * @returns {Array<*>}
+ */
+export function pickWeighted(list, weights, count, random = MATH_RANDOM_DEFAULT_FUNCTION) {
+  const result = []
+  for (let i = 0; i < count; i++) {
+    result.push(pickOneWeighted(list, weights, random))
+  }
+  return result
+}
+
+/**
  * Returns a random element from the list and removes it.
  *
  * @param {Array} list
@@ -144,7 +201,22 @@ export function pick(list, count, random = MATH_RANDOM_DEFAULT_FUNCTION) {
  * @returns {*}
  */
 export function takeOne(list, random = MATH_RANDOM_DEFAULT_FUNCTION) {
-  const [removed] = list.slice(index(list, random), 1)
+  const [removed] = list.splice(index(list, random), 1)
+  return removed
+}
+
+/**
+ * Returns a random element from the list with weights and removes it.
+ *
+ * @param {Array} list
+ * @param {Array} weights
+ * @param {Function} [random=MATH_RANDOM_DEFAULT_FUNCTION]
+ * @returns {*}
+ */
+export function takeOneWeighted(list, weights, random = Math.random) {
+  const index = indexWeighted(list, weights, random);
+  const [removed] = list.splice(index, 1)
+  weights.splice(index, 1)
   return removed
 }
 
@@ -168,14 +240,40 @@ export function take(list, count, random = MATH_RANDOM_DEFAULT_FUNCTION) {
   return result
 }
 
+/**
+ * Returns the specified number of random elements from the
+ * list with weights and removes them.
+ *
+ * @param {Array} list
+ * @param {Array} weights
+ * @param {number} count
+ * @param {Function} [random=MATH_RANDOM_DEFAULT_FUNCTION]
+ * @returns {Array<*>}
+ */
+export function takeWeighted(list, weights, count, random = MATH_RANDOM_DEFAULT_FUNCTION) {
+  const result = []
+  for (let i = 0; i < count; i++) {
+    const value = takeOneWeighted(list, weights, random)
+    if (value !== undefined) {
+      result.push(value)
+    }
+  }
+  return result
+}
+
 export default {
   Random,
   angle,
   between,
   roll,
   index,
+  indexWeighted,
   pickOne,
+  pickOneWeighted,
   pick,
+  pickWeighted,
   takeOne,
-  take
+  takeOneWeighted,
+  take,
+  takeWeighted
 }
