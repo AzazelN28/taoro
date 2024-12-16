@@ -385,6 +385,9 @@ importers:
       '@taoro/loop':
         specifier: workspace:^
         version: link:../loop
+      '@taoro/pipeline':
+        specifier: workspace:^
+        version: link:../pipeline
       '@taoro/resources':
         specifier: workspace:^
         version: link:../resources
@@ -478,6 +481,9 @@ importers:
 
   packages/loop:
     dependencies:
+      '@taoro/pipeline':
+        specifier: workspace:^
+        version: link:../pipeline
       '@taoro/runnable':
         specifier: workspace:^
         version: link:../runnable
@@ -509,6 +515,9 @@ importers:
       '@taoro/math-scalar':
         specifier: workspace:^
         version: link:../math-scalar
+      gl-mat4:
+        specifier: ^1.2.0
+        version: 1.2.0
 
   packages/math-plane: {}
 
@@ -521,6 +530,10 @@ importers:
         version: link:../math-scalar
 
   packages/math-random: {}
+
+  packages/math-random-lcg: {}
+
+  packages/math-random-wasm: {}
 
   packages/math-ray:
     dependencies:
@@ -552,6 +565,12 @@ importers:
   packages/math-vector4: {}
 
   packages/media: {}
+
+  packages/pipeline:
+    dependencies:
+      '@taoro/runnable':
+        specifier: workspace:^
+        version: link:../runnable
 
   packages/pool: {}
 
@@ -3277,6 +3296,10 @@ packages:
     dependencies:
       assert-plus: 1.0.0
     dev: true
+
+  /gl-mat4@1.2.0:
+    resolution: {integrity: sha512-sT5C0pwB1/e9G9AvAoLsoaJtbMGjfd/jfxo8jMCKqYYEnjZuFvqV5rehqar0538EmssjdDeiEWnKyBSTw7quoA==}
+    dev: false
 
   /glob-parent@5.1.2:
     resolution: {integrity: sha512-AOIgSQCepiJYwP3ARnGx+5VnTu2HBYdzbGP45eLw1vr3zB3vZLeyed1sC9hnbcOc9/SrMyM5RPQrkGz4aS9Zow==}

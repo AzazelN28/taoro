@@ -3,6 +3,14 @@ import { Scalar } from '@taoro/math-scalar'
 import { Point } from '@taoro/math-point'
 
 export class Line {
+  /**
+   *
+   * @param {number} [sx=0]
+   * @param {number} [sy=0]
+   * @param {number} [ex=0]
+   * @param {number} [ey=0]
+   * @returns {Line}
+   */
   static create(sx = 0, sy = 0, ex = 0, ey = 0) {
     return new Line(sx, sy, ex, ey)
   }

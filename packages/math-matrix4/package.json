@@ -22,6 +22,7 @@
     "mat4.js"
   ],
   "dependencies": {
-    "@taoro/math-scalar": "workspace:^"
+    "@taoro/math-scalar": "workspace:^",
+    "gl-mat4": "^1.2.0"
   }
 }

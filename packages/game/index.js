@@ -1,4 +1,5 @@
 import { Runnable } from '@taoro/runnable'
+import { Pipeline } from '@taoro/pipeline'
 import { Loop } from '@taoro/loop'
 import { Input } from '@taoro/input'
 import { Audio } from '@taoro/audio'
@@ -11,9 +12,6 @@ import { FrameCounter } from '@taoro/frame-counter'
 
 /**
  * Game
- *
- * Hoola
- *
  */
 export class Game {
   #loop = null
@@ -41,12 +39,12 @@ export class Game {
       globalThis.game = this
     }
     this.#canvas = canvas
-    this.#pipeline = [
-      (currentTime) => this.#frameCounter.update(currentTime),
-      () => this.#viewport.update(),
-      () => this.#input.update(),
-      () => this.#scheduler.update(),
-    ]
+    this.#pipeline = new Pipeline([
+      ['frame-counter', (currentTime) => this.#frameCounter.update(currentTime)],
+      ['viewport', () => this.#viewport.update()],
+      ['input', () => this.#input.update()],
+      ['scheduler', () => this.#scheduler.update()],
+    ])
     this.#loop = new Loop(this.#pipeline)
     this.#input = new Input()
     this.#audio = new Audio()

@@ -11,7 +11,7 @@
 /**
  * @typedef {Object} VertexArrayObjectDescriptor
  * @property {Array<VertexArrayObjectAttributeDescriptor>} attributes
- * @property {WebGLBuffer} [indexBuffer]
+ * @property {WebGLBuffer|null} [indexBuffer]
  */
 
 /**

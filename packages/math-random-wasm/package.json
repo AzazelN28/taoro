@@ -1,7 +1,7 @@
 {
-  "name": "@taoro/loop",
-  "version": "1.0.3",
-  "description": "Loop",
+  "name": "@taoro/math-random-wasm",
+  "version": "1.0.0",
+  "description": "Random WebAssembly module",
   "main": "index.js",
   "type": "module",
   "scripts": {
@@ -12,14 +12,10 @@
   ],
   "author": "AzazelN28 <asakon28@gmail.com>",
   "license": "MIT",
-  "dependencies": {
-    "@taoro/pipeline": "workspace:^",
-    "@taoro/runnable": "workspace:^"
-  },
   "repository": {
     "type": "git",
     "url": "https://github.com/AzazelN28/taoro.git",
-    "directory": "packages/loop"
+    "directory": "packages/math-random-wasm"
   },
   "files": [
     "index.js"

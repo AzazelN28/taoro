@@ -5,30 +5,76 @@ export class Random {
     this.#provider = provider
   }
 
+  /**
+   * Returns a random angle.
+   *
+   * @returns {number}
+   */
   angle() {
     return this.#provider.next() * Math.PI * 2 - Math.PI
   }
 
+  /**
+   * Returns a number between min and max.
+   *
+   * @param {number} min
+   * @param {number} max
+   * @returns {number}
+   */
   between(min, max) {
     return min + this.#provider.next() * (max - min)
   }
 
+  /**
+   * Returns an integer min and max.
+   *
+   * @param {number} min
+   * @param {number} max
+   * @returns {number}
+   */
   intBetween(min, max) {
-    return min + Math.floor(this.#provider.next() * (max - min))
+    const rmin = Math.trunc(min)
+    const rmax = Math.trunc(max)
+    return Math.trunc(this.between(rmin, rmax))
   }
 
+  /**
+   * Returns a random number like if it was rolling a die
+   * of n sides.
+   *
+   * @param {number} sides
+   * @returns {number}
+   */
   roll(sides) {
-    return 1 + Math.floor(this.#provider.next() * sides)
+    return 1 + Math.floor(this.#provider.next() * Math.round(sides))
   }
 
+  /**
+   * Returns a random value of the random provider.
+   *
+   * @returns {number}
+   */
   value() {
     return this.#provider.next()
   }
 
+  /**
+   * Returns a index based on the length of a list.
+   *
+   * @param {ArrayLike} list
+   * @returns {number}
+   */
   index(list) {
     return Math.floor(this.#provider.next() * list.length)
   }
 
+  /**
+   *
+   *
+   * @param {ArrayLike} list
+   * @param {Array<number>} weights
+   * @returns {number}
+   */
   indexWeighted(list, weights) {
     if (list.length !== weights.length) {
       throw new Error('Items and weights must be of the same size')

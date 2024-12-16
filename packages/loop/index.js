@@ -1,17 +1,31 @@
+import { Pipeline } from '@taoro/pipeline'
 import { Runnable } from '@taoro/runnable'
 
 /**
  * Options for the loop.
  *
  * @typedef {Object} LoopOptions
- * @property {Function} [requestAnimationFrame=window.requestAnimationFrame]
- * @property {Function} [cancelAnimationFrame=window.cancelAnimationFrame]
+ * @property {Function} [requestAnimationFrame=defaultRequestAnimationFrame]
+ * @property {Function} [cancelAnimationFrame=defaultCancelAnimationFrame]
  */
 
 /**
  * Loop is used to run a pipeline of functions on each frame.
  */
 export class Loop {
+  static Default = (() => {
+    if ('requestAnimationFrame' in globalThis) {
+      return {
+        requestAnimationFrame: globalThis.requestAnimationFrame,
+        cancelAnimationFrame: globalThis.cancelAnimationFrame
+      }
+    }
+    return {
+      requestAnimationFrame: globalThis.setTimeout,
+      cancelAnimationFrame: globalThis.clearTimeout
+    }
+  })()
+
   /**
    * Validates if the given pipeline is valid. A valid pipeline
    * is an array of functions.
@@ -84,15 +98,12 @@ export class Loop {
    * @param {Array<Function>} [pipeline]
    * @param {LoopOptions} [options]
    */
-  constructor(pipeline = [], {
-    requestAnimationFrame = window.requestAnimationFrame,
-    cancelAnimationFrame = window.cancelAnimationFrame,
-  } = {}) {
-    if (pipeline && !Loop.isPipeline(pipeline)) {
+  constructor(pipeline = [], options = {}) {
+    if (pipeline && !(Loop.isPipeline(pipeline) || Pipeline.isPipeline(pipeline))) {
       throw new Error('Invalid pipeline')
     }
-    this.#requestAnimationFrame = requestAnimationFrame
-    this.#cancelAnimationFrame = cancelAnimationFrame
+    this.#requestAnimationFrame = options?.requestAnimationFrame ?? Loop.Default.requestAnimationFrame
+    this.#cancelAnimationFrame = options?.cancelAnimationFrame ?? Loop.Default.cancelAnimationFrame
     this.#pipeline = pipeline ?? []
   }
 

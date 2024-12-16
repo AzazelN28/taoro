@@ -21,8 +21,8 @@ export class Ray {
   /**
    * Constructor
    *
-   * @param {Vector3} origin
-   * @param {Vector3} direction
+   * @param {Vector3} [origin]
+   * @param {Vector3} [direction]
    */
   constructor(origin = new Vector3(0, 0, 0), direction = new Vector3(0, 0, 1)) {
     this.#origin = origin

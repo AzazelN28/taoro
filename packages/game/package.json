@@ -20,6 +20,7 @@
     "@taoro/frame-counter": "workspace:^",
     "@taoro/input": "workspace:^",
     "@taoro/loop": "workspace:^",
+    "@taoro/pipeline": "workspace:^",
     "@taoro/resources": "workspace:^",
     "@taoro/runnable": "workspace:^",
     "@taoro/scheduler": "workspace:^",

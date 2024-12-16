@@ -72,7 +72,7 @@ export function getProgramAttributes(gl, program) {
 }
 
 /**
- * Returns
+ * Returns program attributes and uniforms
  *
  * @param {WebGLRenderingContext|WebGL2RenderingContext} gl
  * @param {WebGLProgram} program

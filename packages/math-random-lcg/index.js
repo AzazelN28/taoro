@@ -52,6 +52,7 @@ export class RandomProvider {
    * Resets to a new seed
    *
    * @param {number} newSeed
+   * @returns {RandomProvider}
    */
   reset(newSeed) {
     this.#seed = newSeed

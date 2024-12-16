@@ -39,7 +39,22 @@ export class Matrix4 {
   }
 
   static perspective(out, fovy, aspect, near, far) {
-    return mat4.perspective(out.rawData, fovy, aspect, near, far)
+    const f = 1.0 / Math.tan(fovy / 2);
+    if (Number.isFinite(far)) {
+      const nf = 1 / (near - far);
+      return out.set(
+        f / aspect, 0, 0, 0,
+        0, f, 0, 0,
+        0, 0, (far + near) * nf, -1,
+        0, 0, 2 * far * near * nf, 0,
+      )
+    }
+    return out.set(
+      f / aspect, 0, 0, 0,
+      0, f, 0, 0,
+      0, 0, -1, -1,
+      0, 0, -2 * near, 0
+    )
   }
 
   static rotateX(out, a, rad) {
@@ -70,26 +85,27 @@ export class Matrix4 {
     return mat4.scale(out.rawData, matrix.rawData, vector.rawData)
   }
 
+  /**
+   * Raw data.
+   *
+   * @type {Float32Array|Float64Array}
+   */
   #rawData = null
 
-  constructor(
-    Type = Float32Array,
-    m00 = 1, m01 = 0, m02 = 0, m03 = 0,
-    m10 = 0, m11 = 1, m12 = 0, m13 = 0,
-    m20 = 0, m21 = 0, m22 = 1, m23 = 0,
-    m30 = 0, m31 = 0, m32 = 0, m33 = 1
-  ) {
-    this.#rawData = new Type([
-      m00, m01, m02, m03,
-      m10, m11, m12, m13,
-      m20, m21, m22, m23,
-      m30, m31, m32, m33,
-    ])
+  /**
+   * Constructor
+   *
+   * @param {Float32Array|Float64Array} [rawData]
+   */
+  constructor(rawData = new Float32Array(Matrix4.NUM_ELEMENTS)) {
+    this.#rawData = rawData ?? new Float32Array(Matrix4.NUM_ELEMENTS)
+    if (this.#rawData.length !== Matrix4.NUM_ELEMENTS) {
+      throw new TypeError('Invalid rawData')
+    }
+    this.identity()
   }
 
-  get rawData() {
-    return this.#rawData
-  }
+  get rawData() { return this.#rawData }
 
   get m00() { return this.#rawData[Matrix4.M00] }
   set m00(v) { this.#rawData[Matrix4.M00] = v }
@@ -267,6 +283,14 @@ export class Matrix4 {
 
   perspective(fieldOfView, aspectRatio, near, far) {
     return Matrix4.perspective(this, fieldOfView, aspectRatio, near, far)
+  }
+
+  transform({ x, y, z, w }) {
+    const xp = x * this.m00 + y * this.m10 + z * this.m20 * w * this.m30
+    const yp = x * this.m01 + y * this.m11 + z * this.m21 * w * this.m31
+    const zp = x * this.m02 + y * this.m12 + z * this.m22 * w * this.m32
+    const wp = x * this.m03 + y * this.m13 + z * this.m23 * w * this.m33
+    return new Vector4(xp, yp, zp, wp)
   }
 
   prepend(other) {

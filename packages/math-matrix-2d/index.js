@@ -1,5 +1,5 @@
-export class Matrix2D {
-  static ELEMENTS = 6
+export class Matrix {
+  static NUM_ELEMENTS = 6
 
   #rawData = [1, 0, 0, 1, 0, 0]
 
@@ -218,4 +218,4 @@ export class Matrix2D {
   }
 }
 
-export default Matrix2D
+export default Matrix
