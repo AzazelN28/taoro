@@ -1,4 +1,27 @@
 export class Point {
+  /**
+   *
+   * @param {number} ax
+   * @param {number} ay
+   * @param {number} bx
+   * @param {number} by
+   * @returns {number}
+   */
+  static distanceBetween(ax, ay, bx, by) {
+    return Math.hypot(ax - bx, ay - by)
+  }
+
+  /**
+   *
+   *
+   * @param {Point} a
+   * @param {Point} b
+   * @returns {number}
+   */
+  static distanceBetweenPoints(a, b) {
+    return this.distanceBetween(a.x, a.y, b.x, b.y)
+  }
+
   static create(x = 0, y = 0) {
     return new Point(x, y)
   }
@@ -166,6 +189,10 @@ export class Point {
       Math.abs(this.x - x) <= epsilon &&
       Math.abs(this.y - y) <= epsilon
     )
+  }
+
+  toExponential(fractionDigits = 0) {
+    return `Point(${this.x.toExponential(fractionDigits)}, ${this.y.toExponential(fractionDigits)})`
   }
 
   toFixed(fractionDigits = 0) {

@@ -30,22 +30,39 @@ export class Music {
     this.#b.connect(audio.get(channelName).destination)
   }
 
+  /**
+   * @type {Audio}
+   */
   get audio() {
     return this.#audio
   }
 
+  /**
+   * @type {string}
+   */
   get channelName() {
     return this.#channelName
   }
 
+  /**
+   * Returns if one the music sources are playing.
+   *
+   * @type {boolean}
+   */
   get isPlaying() {
     return this.#a.isPlaying || this.#b.isPlaying
   }
 
+  /**
+   * @type {MusicSource}
+   */
   get a() {
     return this.#a
   }
 
+  /**
+   * @type {MusicSource}
+   */
   get b() {
     return this.#b
   }
@@ -54,7 +71,7 @@ export class Music {
    * Cross fades from track a to track b or track b to track a.
    *
    * @param {MusicCrossFadeDirection} direction Direction of the cross fade.
-   * @param {number} [duration=1] Duration of the cross fade (by default is 1 second). 
+   * @param {number} [duration=1] Duration of the cross fade (by default is 1 second).
    */
   crossFade(direction = MusicCrossFadeDirection.A_TO_B, duration = 1) {
     if (direction === MusicCrossFadeDirection.A_TO_B) {

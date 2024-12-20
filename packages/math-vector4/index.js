@@ -6,18 +6,25 @@ export class Vector4 {
   static Z = 2
   static W = 3
 
+  static Axis = Object.freeze({
+    X: new Vector4(1, 0, 0, 0),
+    Y: new Vector4(0, 1, 0, 0),
+    Z: new Vector4(0, 0, 1, 0),
+    W: new Vector4(0, 0, 0, 1)
+  })
+
   /**
    * Creates a new vector
    *
-   * @param {Float32Array|Float64Array} [Type=Float32Array]
    * @param {number} [x=0]
    * @param {number} [y=0]
    * @param {number} [z=0]
    * @param {number} [w=1]
+   * @param {Float32Array|Float64Array} [Type=Float32Array]
    * @returns {Vector4}
    */
-  static create(Type = Float32Array, x = 0, y = 0, z = 0, w = 1) {
-    return new Vector4(Type, x, y, z, w)
+  static create(x = 0, y = 0, z = 0, w = 1, Type = Float32Array) {
+    return new Vector4(x, y, z, w, Type)
   }
 
   /**
@@ -38,27 +45,47 @@ export class Vector4 {
   /**
    * Constructor
    *
-   * @param {Float32Array|Float64Array} [Type=Float32Array]
    * @param {number} [x=0]
    * @param {number} [y=0]
    * @param {number} [z=0]
    * @param {number} [w=1]
+   * @param {Float32Array|Float64Array} [Type=Float32Array]
    */
-  constructor(Type = Float32Array, x = 0, y = 0, z = 0, w = 1) {
+  constructor(x = 0, y = 0, z = 0, w = 1, Type = Float32Array) {
     this.#rawData = new Type([
       x || 0, y || 0, z || 0, w || 1
     ])
   }
 
+  /**
+   * Coordinate x
+   *
+   * @type {number}
+   */
   get x() { return this.#rawData[Vector4.X] }
   set x(x) { this.#rawData[Vector4.X] = x }
 
+  /**
+   * Coordinate y
+   *
+   * @type {number}
+   */
   get y() { return this.#rawData[Vector4.Y] }
   set y(y) { this.#rawData[Vector4.Y] = y }
 
+  /**
+   * Coordinate z
+   *
+   * @type {number}
+   */
   get z() { return this.#rawData[Vector4.Z] }
   set z(z) { this.#rawData[Vector4.Z] = z }
 
+  /**
+   * Coordinate w
+   *
+   * @type {number}
+   */
   get w() { return this.#rawData[Vector4.W] }
   set w(w) { this.#rawData[Vector4.W] = w }
 

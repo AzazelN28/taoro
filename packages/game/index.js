@@ -79,46 +79,79 @@ export class Game {
     return this.#loop
   }
 
+  /**
+   * @type {Pipeline}
+   */
   get pipeline() {
     return this.#pipeline
   }
 
+  /**
+   * @type {Array}
+   */
   get systems() {
     return this.#systems
   }
 
+  /**
+   * @type {HTMLCanvasElement}
+   */
   get canvas() {
     return this.#canvas
   }
 
+  /**
+   * @type {Input}
+   */
   get input() {
     return this.#input
   }
 
+  /**
+   * @type {Audio}
+   */
   get audio() {
     return this.#audio
   }
 
+  /**
+   * @type {Sound}
+   */
   get sound() {
     return this.#sound
   }
 
+  /**
+   * @type {Music}
+   */
   get music() {
     return this.#music
   }
 
+  /**
+   * @type {Resources}
+   */
   get resources() {
     return this.#resources
   }
 
+  /**
+   * @type {Scheduler}
+   */
   get scheduler() {
     return this.#scheduler
   }
 
+  /**
+   * @type {FrameCounter}
+   */
   get frameCounter() {
     return this.#frameCounter
   }
 
+  /**
+   * @type {Viewport}
+   */
   get viewport() {
     return this.#viewport
   }

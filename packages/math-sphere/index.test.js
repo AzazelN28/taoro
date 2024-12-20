@@ -10,6 +10,12 @@ describe('Sphere', () => {
     expect(sphere.radius).toBe(1)
   })
 
+  it('should create a new Sphere with specified values', () => {
+    const sphere = new Sphere(new Vector3(0, 0, 0), 2)
+    expect(sphere.center).toStrictEqual(new Vector3(0, 0, 0))
+    expect(sphere.radius).toBe(2)
+  })
+
   it('should create a new Sphere and intersect a Ray', () => {
     const sphere = new Sphere()
     expect(sphere.center).toBeInstanceOf(Vector3)

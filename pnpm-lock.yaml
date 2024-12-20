@@ -490,7 +490,19 @@ importers:
 
   packages/math-angle: {}
 
+  packages/math-circle:
+    dependencies:
+      '@taoro/math-point':
+        specifier: workspace:^
+        version: link:../math-point
+
   packages/math-custom-vector: {}
+
+  packages/math-ellipse:
+    dependencies:
+      '@taoro/math-point':
+        specifier: workspace:^
+        version: link:../math-point
 
   packages/math-interpolation: {}
 
@@ -519,7 +531,11 @@ importers:
         specifier: ^1.2.0
         version: 1.2.0
 
-  packages/math-plane: {}
+  packages/math-plane:
+    dependencies:
+      '@taoro/math-vector3':
+        specifier: workspace:^
+        version: link:../math-vector3
 
   packages/math-point: {}
 
@@ -557,6 +573,12 @@ importers:
       '@taoro/math-vector3':
         specifier: workspace:^
         version: link:../math-vector3
+
+  packages/math-triangle:
+    dependencies:
+      '@taoro/math-point':
+        specifier: workspace:^
+        version: link:../math-point
 
   packages/math-vector2: {}
 

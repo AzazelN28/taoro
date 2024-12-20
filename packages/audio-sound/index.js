@@ -15,7 +15,15 @@ import { AudioChannelName } from '@taoro/audio-channel'
  * Sound Subsystem
  */
 export class Sound {
+
+  /**
+   * @type {Audio}
+   */
   #audio = null
+
+  /**
+   * @type {string}
+   */
   #channelName = null
 
   /**

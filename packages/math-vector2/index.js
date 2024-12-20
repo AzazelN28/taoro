@@ -67,20 +67,33 @@ export class Vector2 {
     return value instanceof Vector2
   }
 
+  /**
+   * @type {ArrayLike}
+   */
   #rawData = null
 
   /**
    * Constructor
    *
-   * @param {FunctionConstructor} [Type=Float32Array]
    * @param {number} [x=0]
    * @param {number} [y=0]
+   * @param {FunctionConstructor} [Type=Float32Array]
    */
-  constructor(Type = Float32Array, x = 0, y = 0) {
+  constructor(x = 0, y = 0, Type = Float32Array) {
     this.#rawData = new Type([
       x || 0, y || 0
     ])
   }
+
+  get rawData() {
+    return this.#rawData
+  }
+
+  get x() { return this.#rawData[Vector2.X] }
+  set x(newValue) { this.#rawData[Vector2.X] = newValue }
+
+  get y() { return this.#rawData[Vector2.Y] }
+  set y(newValue) { this.#rawData[Vector2.Y] = newValue }
 
   /**
    * Length of this vector.

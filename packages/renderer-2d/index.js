@@ -15,7 +15,7 @@ export class ZIndexComponent extends Component {
 
   constructor(id, { alpha = 1, compositeOperation = 'source-over', zIndex = 0 } = {}) {
     super(id)
-    Component.registerByConstructor(ZIndexComponent, this)
+    Component.register(this, ZIndexComponent)
     this.alpha = alpha
     this.compositeOperation = compositeOperation
     this.#zIndex = zIndex

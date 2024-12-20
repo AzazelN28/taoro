@@ -75,25 +75,20 @@ export class Component {
    * @param {Component} constructor
    */
   static findByIdAndConstructor(id, constructor) {
-    const components = this.findById(id)
+    const components = this.findByConstructor(constructor)
     if (!components) {
       return null
     }
-    for (const component of components) {
-      if (component.constructor === constructor) {
-        return component
-      }
-    }
-    return null
+    return components.find((component) => component.id === id) ?? null
   }
 
   /**
    * Registers the component with the given id.
    *
    * @param {Component} component
+   * @param {*} [id]
    */
-  static registerById(component) {
-    const id = component.id
+  static registerById(component, id = component.id) {
     if (!this.#componentsById.has(id)) {
       this.#componentsById.set(id, new Array())
     }
@@ -105,9 +100,9 @@ export class Component {
    * Registers the component with the given constructor.
    *
    * @param {Component} component
+   * @param {Function} [constructor]
    */
-  static registerByConstructor(component) {
-    const constructor = component.constructor
+  static registerByConstructor(component, constructor = component.constructor) {
     if (!this.#componentsByConstructor.has(constructor)) {
       this.#componentsByConstructor.set(constructor, new Array())
     }
@@ -119,10 +114,12 @@ export class Component {
    * Registers the component.
    *
    * @param {Component} component
+   * @param {Function} [constructor]
+   * @param {*} [id]
    */
-  static register(component) {
-    this.registerById(component)
-    this.registerByConstructor(component)
+  static register(component, constructor, id) {
+    this.registerById(component, id)
+    this.registerByConstructor(component, constructor)
   }
 
   /**
@@ -137,7 +134,8 @@ export class Component {
     if (index < 0) {
       throw new Error('Component not found')
     }
-    componentRegistry.splice(index, 1)
+    const [removed] = componentRegistry.splice(index, 1)
+    return removed
   }
 
   /**
@@ -152,7 +150,8 @@ export class Component {
     if (index < 0) {
       throw new Error('Component not found')
     }
-    componentRegistry.splice(index, 1)
+    const [removed] = componentRegistry.splice(index, 1)
+    return removed
   }
 
   /**

@@ -1,7 +1,7 @@
 {
-  "name": "@taoro/math-plane",
+  "name": "@taoro/math-ellipse",
   "version": "1.0.0",
-  "description": "Plane",
+  "description": "Ellipse",
   "main": "index.js",
   "type": "module",
   "scripts": {
@@ -15,12 +15,12 @@
   "repository": {
     "type": "git",
     "url": "https://github.com/AzazelN28/taoro.git",
-    "directory": "packages/math-plane"
+    "directory": "packages/math-point"
   },
   "files": [
     "index.js"
   ],
   "dependencies": {
-    "@taoro/math-vector3": "workspace:^"
+    "@taoro/math-point": "workspace:^"
   }
 }

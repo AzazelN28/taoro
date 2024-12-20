@@ -39,6 +39,15 @@ export class Random {
   }
 
   /**
+   * Returns a random integer number between 0 and MAX_SAFE_INTEGER.
+   *
+   * @returns {number}
+   */
+  int() {
+    return Math.trunc(this.#provider.next() * Number.MAX_SAFE_INTEGER)
+  }
+
+  /**
    * Returns a random number like if it was rolling a die
    * of n sides.
    *

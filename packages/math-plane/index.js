@@ -2,7 +2,7 @@ import { Vector3 } from '@taoro/math-vector3'
 
 export class Plane {
   /**
-   * Normal of the plane
+   * Normal of the plane.
    *
    * @type {Vector3}
    */
@@ -18,8 +18,8 @@ export class Plane {
   /**
    * Constructor
    *
-   * @param {Vector3} normal
-   * @param {number} constant
+   * @param {Vector3} [normal]
+   * @param {number} [constant]
    */
   constructor(normal = new Vector3(), constant = 0) {
     this.#normal = normal
@@ -65,5 +65,31 @@ export class Plane {
    */
   clone() {
     return new Plane(this.#normal, this.constant)
+  }
+
+  /**
+   *
+   * @param {number} [fractionDigits]
+   * @returns {string}
+   */
+  toExponential(fractionDigits = 0) {
+    return `Plane(${this.#normal.toExponential(fractionDigits)}, ${this.constant.toExponential(fractionDigits)})`
+  }
+
+  /**
+   *
+   * @param {number} fractionDigits
+   * @returns {string}
+   */
+  toFixed(fractionDigits = 0) {
+    return `Plane(${this.#normal.toFixed(fractionDigits)}, ${this.constant.toFixed(fractionDigits)})`
+  }
+
+  /**
+   *
+   * @returns {string}
+   */
+  toString() {
+    return `Plane(${this.#normal}, ${this.constant})`
   }
 }

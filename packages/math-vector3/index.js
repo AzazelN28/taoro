@@ -7,6 +7,12 @@ export class Vector3 {
   static Y = 1
   static Z = 2
 
+  static Axis = Object.freeze({
+    X: new Vector3(1, 0, 0),
+    Y: new Vector3(0, 1, 0),
+    Z: new Vector3(0, 0, 1)
+  })
+
   static transform(out, a, matrix) {
     return vec3.transformMat4(out.rawData, a.rawData, matrix.rawData)
   }
@@ -20,8 +26,8 @@ export class Vector3 {
    * @param {number} z
    * @returns {Vector3}
    */
-  static create(Type = Float32Array, x = 0, y = 0, z = 0) {
-    return new Vector3(Type, x, y, z)
+  static create(x = 0, y = 0, z = 0, Type = Float32Array) {
+    return new Vector3(x, y, z, Type)
   }
 
   /**
@@ -37,7 +43,7 @@ export class Vector3 {
   /**
    * Returns true if all the Vector3 properties are finite.
    *
-   * @param {Vector3} param0
+   * @param {Vector3} vector
    * @returns {boolean}
    */
   static isFinite({ x, y, z }) {
@@ -47,7 +53,7 @@ export class Vector3 {
   /**
    * Returns true if all the Vector3 properties are integers.
    *
-   * @param {Vector3} param0
+   * @param {Vector3} vector
    * @returns {boolean}
    */
   static isInteger({ x, y, z }) {
@@ -57,7 +63,7 @@ export class Vector3 {
   /**
    * Returns true if all the Vector3 properties are zero.
    *
-   * @param {Vector3} param0
+   * @param {Vector3} vector
    * @returns {boolean}
    */
   static isZero({ x, y, z }) {
@@ -143,14 +149,14 @@ export class Vector3 {
   /**
    * Constructor
    *
+   * @param {number} [x=0]
+   * @param {number} [y=0]
+   * @param {number} [z=0]
    * @param {Float32Array|Float64Array} Type
-   * @param {number} [x]
-   * @param {number} [y]
-   * @param {number} [z]
    */
-  constructor(Type = Float32Array, x = 0, y = 0, z = 0) {
+  constructor(x = 0, y = 0, z = 0, Type = Float32Array) {
     this.#rawData = new Type([
-      x, y, z
+      x || 0, y || 0, z || 0
     ])
   }
 
