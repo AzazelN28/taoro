@@ -3,11 +3,11 @@ import shader from './shader'
 import buffer from './buffer'
 import vao from './vao'
 
-export { program, shader, buffer, vao }
-
-export default {
+export const WebGL = {
   program,
   shader,
   buffer,
-  vao,
+  vao
 }
+
+export default WebGL

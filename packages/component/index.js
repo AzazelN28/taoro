@@ -69,6 +69,22 @@ export class Component {
   }
 
   /**
+   * Returns all components with the given constructors.
+   *
+   * @param  {...any} constructors
+   * @returns {Array<Component>}
+   */
+  static findByConstructors(...constructors) {
+    const result = []
+    for (const constructor of constructors) {
+      const list = this.findByConstructor(constructor)
+      if (!list) continue
+      result.push(...list)
+    }
+    return result
+  }
+
+  /**
    * Returns the component with the given id and constructor.
    *
    * @param {*} id

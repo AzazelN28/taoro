@@ -38,10 +38,11 @@ export class RandomProvider {
    * @param {URL|string} [url='random.wasm']
    */
   static async load(url = 'random.wasm') {
-    const { instance, module } = await WebAssembly.instantiateStreaming(
-      fetch(url)
+    const response = await fetch(url)
+    const arrayBuffer = await response.arrayBuffer()
+    const { instance, module } = await WebAssembly.instantiate(
+      arrayBuffer 
     )
-    console.log(instance, module)
     this.#instance = instance
     this.#module = module
     this.#currentIndex = 0
